@@ -1,0 +1,19 @@
+{
+  "name": "trustcheck-be",
+  "version": "1.0.0",
+  "description": "Back-end da plataforma de pesquisa da Trust",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ragnermoura/trustcheck-be.git"
+  },
+  "author": "Willian Ragner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ragnermoura/trustcheck-be/issues"
+  },
+  "homepage": "https://github.com/ragnermoura/trustcheck-be#readme"
+}
