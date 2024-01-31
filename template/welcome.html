@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+</head>
+<style>
+    :root {
+        --uigray-80: rgba(58, 58, 58, 1);
+    }
+
+
+    @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+    @import url("https://fonts.googleapis.com/css?family=Ubuntu:700,400|Spline+Sans:700");
+
+    * {
+        -webkit-font-smoothing: antialiased;
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+    }
+
+    /* a blue color as a generic focus style */
+    button:focus-visible {
+        outline: 2px solid #4a90e2 !important;
+        outline: -webkit-focus-ring-color auto 5px !important;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+
+
+    .sucesso {
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .sucesso .div {
+        background-color: #f4f4f4;
+        overflow: hidden;
+        width: 600px;
+        height: 800px;
+        position: relative;
+    }
+
+    .sucesso .overlap {
+        position: absolute;
+        width: 279px;
+        height: 41px;
+        top: 450px;
+        left: 161px;
+        background-color: #0B3E80;
+        border-radius: 6px;
+    }
+
+    .sucesso .acesse-sua {
+        position: absolute;
+        height: 24px;
+        top: 8px;
+        left: 53px;
+        font-family: "Ubuntu", Helvetica;
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 12px;
+        text-align: center;
+        letter-spacing: 0.8px;
+        line-height: 24px;
+        white-space: nowrap;
+    }
+
+    .sucesso .overlap-group {
+        position: absolute;
+        width: 611px;
+        height: 260px;
+        top: -23px;
+        left: -6px;
+    }
+
+    .sucesso .text {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        position: absolute;
+        top: 228px;
+        left: 143px;
+    }
+
+    .sucesso .title {
+        position: relative;
+        width: 327px;
+        margin-top: -1px;
+        font-family: "Ubuntu", Helvetica;
+        font-weight: 700;
+        color: var(--uigray-80);
+        font-size: 28px;
+        text-align: center;
+        letter-spacing: 0;
+        line-height: 32px;
+    }
+
+    .sucesso .rectangle {
+        position: absolute;
+        width: 600px;
+        height: 97px;
+        top: 23px;
+        left: 6px;
+        background-color: #061a33;
+    }
+
+    .sucesso .trust {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-family: "Spline Sans", Helvetica;
+        font-weight: 700;
+        color: #ffffff1a;
+        font-size: 200px;
+        text-align: center;
+        letter-spacing: 0;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .sucesso .element {
+        position: absolute;
+        width: 175px;
+        height: 175px;
+        top: 53px;
+        left: 218px;
+        object-fit: cover;
+    }
+
+    .sucesso .copy {
+        top: 355px;
+        left: 137px;
+        font-weight: 700;
+        font-size: 17px;
+        position: absolute;
+        width: 327px;
+        font-family: "Ubuntu", Helvetica;
+        color: #3a3a3a;
+        text-align: center;
+        letter-spacing: 0;
+        line-height: 24px;
+    }
+
+    .sucesso .text-wrapper {
+        top: 406px;
+        left: 136px;
+        font-weight: 400;
+        font-size: 12px;
+        position: absolute;
+        width: 327px;
+        font-family: "Ubuntu", Helvetica;
+        color: #3a3a3a;
+        text-align: center;
+        letter-spacing: 0;
+        line-height: 24px;
+    }
+
+    .sucesso .boto-cards {
+        position: absolute;
+        width: 365px;
+        height: 115px;
+        top: 537px;
+        left: 118px;
+    }
+
+    .sucesso .boto {
+        position: relative;
+        height: 115px;
+    }
+
+    .sucesso .receber {
+        position: absolute;
+        width: 115px;
+        height: 115px;
+        top: 0;
+        left: 0;
+    }
+
+    .sucesso .reservar {
+        position: absolute;
+        width: 117px;
+        height: 115px;
+        top: 0;
+        left: 124px;
+    }
+
+    .sucesso .overlap-group-2 {
+        position: relative;
+        width: 115px;
+        height: 115px;
+        background-color: #dadada;
+        border-radius: 7px;
+    }
+
+    .sucesso .text-wrapper-2 {
+        width: 86px;
+        left: 14px;
+        position: absolute;
+        top: 72px;
+        font-family: "Ubuntu", Helvetica;
+        font-weight: 700;
+        color: #332929;
+        font-size: 13px;
+        text-align: center;
+        letter-spacing: 0;
+        line-height: normal;
+    }
+
+    .sucesso .image {
+        position: absolute;
+        width: 54px;
+        height: 54px;
+        top: 10px;
+        left: 30px;
+        object-fit: cover;
+    }
+
+    .sucesso .pedir {
+        position: absolute;
+        width: 117px;
+        height: 115px;
+        top: 0;
+        left: 250px;
+    }
+
+    .sucesso .text-wrapper-3 {
+        width: 76px;
+        left: 19px;
+        position: absolute;
+        top: 72px;
+        font-family: "Ubuntu", Helvetica;
+        font-weight: 700;
+        color: #332929;
+        font-size: 13px;
+        text-align: center;
+        letter-spacing: 0;
+        line-height: normal;
+    }
+
+    .sucesso .este-e-mail-foi {
+        position: absolute;
+        height: 32px;
+        top: 730px;
+        left: 147px;
+        font-family: "Ubuntu", Helvetica;
+        font-weight: 400;
+        color: transparent;
+        font-size: 10px;
+        text-align: center;
+        letter-spacing: 0;
+        line-height: 32px;
+        white-space: nowrap;
+    }
+
+    .sucesso .span {
+        font-weight: 300;
+        color: #bdbdbd;
+    }
+
+    .sucesso .text-wrapper-4 {
+        font-weight: 700;
+        color: #0b3e80;
+    }
+
+    .sucesso .group {
+        position: absolute;
+        width: 95px;
+        height: 95px;
+        top: 249px;
+        left: 253px;
+    }
+</style>
+
+<body>
+    <div class="sucesso">
+        <div class="div">
+            <div class="overlap">
+                <div class="acesse-sua">IR PARA A PLATAFORMA</div>
+            </div>
+            <div class="overlap-group">
+                <div class="text">
+                    <div class="title">Olá, {{nome}}</div>
+                </div>
+                <div class="rectangle"></div>
+                <div class="trust">TRUST</div>
+                <img class="element" src="https://c.animaapp.com/57E1xNQh/img/9932955-1.svg" />
+            </div>
+            <p class="copy">Sua conta acaba de ser criada. Aguade 48h até que tudo esteja liberado</p>
+            <p class="text-wrapper">Precisamos validar alguns documentos. Clique no link abaixo para fazer upload dos seus documentos.</p>
+         
+            <p class="este-e-mail-foi">
+                <span class="span">Este e-mail foi enviado pelo setor de segurança da </span>
+                <span class="text-wrapper-4">Trust Tecnologia</span>
+            </p>
+            <img class="group" src="https://c.animaapp.com/57E1xNQh/img/group@2x.png" />
+        </div>
+    </div>
+</body>
+
+</html>

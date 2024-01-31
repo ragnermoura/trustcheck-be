@@ -18,8 +18,6 @@ const rotaStatus = require('./routes/status');
 const rotaToken = require('./routes/token');
 const rotaUsuarios = require('./routes/usuario');
 
-
-
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

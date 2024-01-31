@@ -18,14 +18,10 @@ const Perfil = conn.define("tb002_perfil", {
         allowNull: false,
         unique: true
     },
-    cnpj: {
+    cpf: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-    },
-    senha: {
-        type: DataTypes.STRING,
-        allowNull: false,
     },
     telefone: {
         type: DataTypes.STRING,

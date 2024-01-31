@@ -27,6 +27,7 @@ const Acessos = conn.define(
         plataforma: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         navegador: {
             type: DataTypes.STRING,
@@ -35,6 +36,7 @@ const Acessos = conn.define(
         enderecoIp: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         id_user: {
             type: DataTypes.INTEGER,
