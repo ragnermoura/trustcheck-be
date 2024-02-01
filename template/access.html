@@ -3,332 +3,333 @@
 
 <head>
     <meta charset="utf-8" />
+    <style>
+        :root {
+            --uigray-80: rgba(58, 58, 58, 1);
+        }
+
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+        @import url("https://fonts.googleapis.com/css?family=Ubuntu:500,700,400,300|Spline+Sans:700");
+
+        * {
+            -webkit-font-smoothing: antialiased;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0px;
+            height: 100%;
+        }
+
+        /* a blue color as a generic focus style */
+        button:focus-visible {
+            outline: 2px solid #4a90e2 !important;
+            outline: -webkit-focus-ring-color auto 5px !important;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        .acesso {
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .acesso .div {
+            background-color: #f4f4f4;
+            overflow: hidden;
+            width: 600px;
+            height: 800px;
+            position: relative;
+        }
+
+        .acesso .overlap {
+            position: absolute;
+            width: 279px;
+            height: 41px;
+            top: 496px;
+            left: 159px;
+            background-color: #ce1e0c;
+            border-radius: 6px;
+        }
+
+        .acesso .n-o-fui-eu {
+            position: absolute;
+            height: 24px;
+            top: 8px;
+            left: 102px;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 12px;
+            text-align: center;
+            letter-spacing: 0.8px;
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
+        .acesso .overlap-group {
+            position: absolute;
+            width: 611px;
+            height: 260px;
+            top: -23px;
+            left: -6px;
+        }
+
+        .acesso .text {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            position: absolute;
+            top: 228px;
+            left: 143px;
+        }
+
+        .acesso .title {
+            position: relative;
+            width: 327px;
+            margin-top: -1px;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 700;
+            color: var(--uigray-80);
+            font-size: 28px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+        }
+
+        .acesso .rectangle {
+            position: absolute;
+            width: 600px;
+            height: 97px;
+            top: 23px;
+            left: 6px;
+            background-color: #061a33;
+        }
+
+        .acesso .trust {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-family: "Spline Sans", Helvetica;
+            font-weight: 700;
+            color: #ffffff1a;
+            font-size: 200px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: normal;
+            white-space: nowrap;
+        }
+
+        .acesso .element {
+            position: absolute;
+            width: 175px;
+            height: 175px;
+            top: 53px;
+            left: 218px;
+            object-fit: cover;
+        }
+
+        .acesso .copy {
+            position: absolute;
+            width: 327px;
+            top: 253px;
+            left: 136px;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 700;
+            color: #3a3a3a;
+            font-size: 17px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 24px;
+        }
+
+        .acesso .este-e-mail-foi {
+            position: absolute;
+            height: 32px;
+            top: 730px;
+            left: 147px;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 400;
+            color: transparent;
+            font-size: 10px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .text-wrapper {
+            font-weight: 300;
+            color: #bdbdbd;
+        }
+
+        .acesso .span {
+            font-weight: 700;
+            color: #0b3e80;
+        }
+
+        .acesso .overlap-group-2 {
+            position: absolute;
+            width: 81px;
+            height: 114px;
+            top: 345px;
+            left: 148px;
+        }
+
+        .acesso .text-wrapper-2 {
+            position: absolute;
+            height: 32px;
+            top: 0;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 500;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .text-wrapper-3 {
+            font-weight: 500;
+            position: absolute;
+            height: 32px;
+            top: 28px;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .text-wrapper-4 {
+            font-weight: 500;
+            position: absolute;
+            height: 32px;
+            top: 54px;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .text-wrapper-5 {
+            position: absolute;
+            height: 32px;
+            top: 82px;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 500;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .overlap-2 {
+            position: absolute;
+            width: 90px;
+            height: 114px;
+            top: 345px;
+            left: 250px;
+        }
+
+        .acesso .regiao {
+            position: absolute;
+            height: 32px;
+            top: 0;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .plataforma {
+            font-weight: 400;
+            position: absolute;
+            height: 32px;
+            top: 28px;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .navegador {
+            font-weight: 400;
+            position: absolute;
+            height: 32px;
+            top: 54px;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .enderecoip {
+            position: absolute;
+            height: 32px;
+            top: 82px;
+            left: 0;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 400;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+
+        .acesso .p {
+            position: absolute;
+            width: 448px;
+            height: 20px;
+            top: 558px;
+            left: 85px;
+            font-family: "Ubuntu", Helvetica;
+            font-weight: 300;
+            color: #2753c5;
+            font-size: 10px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 32px;
+            white-space: nowrap;
+        }
+    </style>
 </head>
-<style>
-    :root {
-        --uigray-80: rgba(58, 58, 58, 1);
-    }
 
-    @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-    @import url("https://fonts.googleapis.com/css?family=Ubuntu:500,700,400,300|Spline+Sans:700");
-
-    * {
-        -webkit-font-smoothing: antialiased;
-        box-sizing: border-box;
-    }
-
-    html,
-    body {
-        margin: 0px;
-        height: 100%;
-    }
-
-    /* a blue color as a generic focus style */
-    button:focus-visible {
-        outline: 2px solid #4a90e2 !important;
-        outline: -webkit-focus-ring-color auto 5px !important;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-
-    .acesso {
-        background-color: #f4f4f4;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .acesso .div {
-        background-color: #f4f4f4;
-        overflow: hidden;
-        width: 600px;
-        height: 800px;
-        position: relative;
-    }
-
-    .acesso .overlap {
-        position: absolute;
-        width: 279px;
-        height: 41px;
-        top: 496px;
-        left: 159px;
-        background-color: #ce1e0c;
-        border-radius: 6px;
-    }
-
-    .acesso .n-o-fui-eu {
-        position: absolute;
-        height: 24px;
-        top: 8px;
-        left: 102px;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 700;
-        color: #ffffff;
-        font-size: 12px;
-        text-align: center;
-        letter-spacing: 0.8px;
-        line-height: 24px;
-        white-space: nowrap;
-    }
-
-    .acesso .overlap-group {
-        position: absolute;
-        width: 611px;
-        height: 260px;
-        top: -23px;
-        left: -6px;
-    }
-
-    .acesso .text {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-        position: absolute;
-        top: 228px;
-        left: 143px;
-    }
-
-    .acesso .title {
-        position: relative;
-        width: 327px;
-        margin-top: -1px;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 700;
-        color: var(--uigray-80);
-        font-size: 28px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-    }
-
-    .acesso .rectangle {
-        position: absolute;
-        width: 600px;
-        height: 97px;
-        top: 23px;
-        left: 6px;
-        background-color: #061a33;
-    }
-
-    .acesso .trust {
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-family: "Spline Sans", Helvetica;
-        font-weight: 700;
-        color: #ffffff1a;
-        font-size: 200px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: normal;
-        white-space: nowrap;
-    }
-
-    .acesso .element {
-        position: absolute;
-        width: 175px;
-        height: 175px;
-        top: 53px;
-        left: 218px;
-        object-fit: cover;
-    }
-
-    .acesso .copy {
-        position: absolute;
-        width: 327px;
-        top: 253px;
-        left: 136px;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 700;
-        color: #3a3a3a;
-        font-size: 17px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 24px;
-    }
-
-    .acesso .este-e-mail-foi {
-        position: absolute;
-        height: 32px;
-        top: 730px;
-        left: 147px;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 400;
-        color: transparent;
-        font-size: 10px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .text-wrapper {
-        font-weight: 300;
-        color: #bdbdbd;
-    }
-
-    .acesso .span {
-        font-weight: 700;
-        color: #0b3e80;
-    }
-
-    .acesso .overlap-group-2 {
-        position: absolute;
-        width: 81px;
-        height: 114px;
-        top: 345px;
-        left: 148px;
-    }
-
-    .acesso .text-wrapper-2 {
-        position: absolute;
-        height: 32px;
-        top: 0;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 500;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .text-wrapper-3 {
-        font-weight: 500;
-        position: absolute;
-        height: 32px;
-        top: 28px;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .text-wrapper-4 {
-        font-weight: 500;
-        position: absolute;
-        height: 32px;
-        top: 54px;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .text-wrapper-5 {
-        position: absolute;
-        height: 32px;
-        top: 82px;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 500;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .overlap-2 {
-        position: absolute;
-        width: 90px;
-        height: 114px;
-        top: 345px;
-        left: 250px;
-    }
-
-    .acesso .regiao {
-        position: absolute;
-        height: 32px;
-        top: 0;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 400;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .plataforma {
-        font-weight: 400;
-        position: absolute;
-        height: 32px;
-        top: 28px;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .navegador {
-        font-weight: 400;
-        position: absolute;
-        height: 32px;
-        top: 54px;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .enderecoip {
-        position: absolute;
-        height: 32px;
-        top: 82px;
-        left: 0;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 400;
-        color: #000000;
-        font-size: 14px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-
-    .acesso .p {
-        position: absolute;
-        width: 448px;
-        height: 20px;
-        top: 558px;
-        left: 85px;
-        font-family: "Ubuntu", Helvetica;
-        font-weight: 300;
-        color: #2753c5;
-        font-size: 10px;
-        text-align: center;
-        letter-spacing: 0;
-        line-height: 32px;
-        white-space: nowrap;
-    }
-</style>
 
 <body>
     <div class="acesso">

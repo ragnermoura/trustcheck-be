@@ -96,8 +96,6 @@ const cadastrarUsuario = async (req, res, next) => {
       id_plano: req.body.id_plano,
       id_status: req.body.status,
       id_nivel: req.body.nivel,
-
-
     });
     const response = {
       mensagem: "Usuário cadastrado com sucesso",

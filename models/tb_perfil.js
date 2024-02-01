@@ -27,6 +27,14 @@ const Perfil = conn.define("tb002_perfil", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    telefone2: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    aniversario: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     cep: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -44,7 +52,11 @@ const Perfil = conn.define("tb002_perfil", {
         allowNull: false,
     },
     tem_cnpj: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    revendedor: {
+        type: DataTypes.STRING,
         allowNull: false,
     },
     id_user: {
