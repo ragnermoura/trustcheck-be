@@ -45,17 +45,17 @@ const Perfil = conn.define("tb002_perfil", {
     },
     pdf_rg: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     pdf_cnpj: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     tem_cnpj: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    revendedor: {
+    termos: {
         type: DataTypes.STRING,
         allowNull: false,
     },

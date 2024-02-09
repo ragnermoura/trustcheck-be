@@ -1,8 +1,10 @@
 const bcrypt = require("bcrypt");
-const fs = require('fs');
 const path = require('path');
-const nodemailer = require('nodemailer');
+const fs = require("fs").promises;
+const nodemailer = require("nodemailer");
 const User = require("../models/tb_usuarios");
+
+require('dotenv').config();
 
 const obterUsuarios = async (req, res, next) => {
   try {
@@ -88,6 +90,7 @@ const cadastrarUsuario = async (req, res, next) => {
         });
     }
     const hashedPassword = await bcrypt.hash(req.body.senha, 10);
+
     const novoUsuario = await User.create({
       nome: req.body.nome,
       sobrenome: req.body.sobrenome,
@@ -96,6 +99,7 @@ const cadastrarUsuario = async (req, res, next) => {
       id_plano: req.body.id_plano,
       id_status: req.body.status,
       id_nivel: req.body.nivel,
+      
     });
     const response = {
       mensagem: "Usuário cadastrado com sucesso",
@@ -118,98 +122,93 @@ const cadastrarUsuario = async (req, res, next) => {
   }
 };
 
+
+
 const enviarBoasVindas = async (req, res) => {
+  const { email, nome, id, perfil } = req.body;
   try {
-    const usuario = await User.findOne({ where: { email: req.body.email } });
-    if (!usuario) {
-      return res.status(404).send('E-mail não encontrado.');
-    }
+    const htmlFilePath = path.join(__dirname, '../template/welcome/index.html');
+    let htmlContent = await fs.readFile(htmlFilePath, "utf8");
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.HOST,
-      port: process.env.PORTA,
-      secure: process.env.SECURITY,
+    htmlContent = htmlContent
+      .replace("{{nome}}", nome)
+      .replace("{{emailclient}}", email)
+      .replace("{{id}}", id)
+      .replace("{{perfil}}", perfil)
+
+    let transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: true, // true para porta 465, false para outras portas
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
+        pass: process.env.EMAIL_PASS,
+      },
+      tls: {
+        ciphers: "TLSv1",
+      },
     });
 
-    const templatePath = path.join(__dirname, '../template/welcome.html');
-    let html = fs.readFileSync(templatePath, 'utf8');
 
-    html = html.replace('{{nome}}', usuario.nome);
-    html = html.replace('{{id_user}}', usuario.id_user);
-    html = html.replace('{{email}}', usuario.email);
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: req.body.email,
-      subject: '🚀 Bem-vindo(a) à TRUST!',
-      html: html
+    let mailOptions = {
+      from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
+      to: email,
+      subject: "✅ Conta criada com sucesso!",
+      html: htmlContent, // Usa o HTML modificado como corpo do email
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-        return res.status(500).send('Erro ao enviar e-mail.');
-      } else {
-        console.log('Email enviado: ' + info.response);
-        return res.status(200).send('E-mail de boas-vindas enviado com sucesso.');
-      }
-    });
-
+    let info = await transporter.sendMail(mailOptions);
+    console.log("Mensagem enviada: %s", info.messageId);
+    res.send("Email enviado com sucesso!");
   } catch (error) {
-    console.log(error);
-    res.status(500).send('Erro no servidor.');
+    console.error("Erro ao enviar email: ", error);
+    res.send("Erro ao enviar email.");
   }
 };
-const enviarAtivacao = async (req, res) => {
-  try {
-    const usuario = await User.findOne({ where: { email: req.body.email } });
-    if (!usuario) {
-      return res.status(404).send('E-mail não encontrado.');
-    }
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.HOST,
-      port: process.env.PORTA,
-      secure: process.env.SECURITY,
+const enviarAdmConta = async (req, res) => {
+  const { email, nomecliente } = req.body;
+  const nome = 'Humberto'
+  try {
+    const htmlFilePath = path.join(__dirname, '../template/alerts/conta.html');
+    let htmlContent = await fs.readFile(htmlFilePath, "utf8");
+
+    htmlContent = htmlContent
+      .replace("{{nome}}", nome)
+      .replace("{{emailclient}}", email)
+      .replace("{{nomeclient}}", nomecliente)
+
+    let transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: true, // true para porta 465, false para outras portas
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
+        pass: process.env.EMAIL_PASS,
+      },
+      tls: {
+        ciphers: "TLSv1",
+      },
     });
 
-    const templatePath = path.join(__dirname, '../template/approve.html');
-    let html = fs.readFileSync(templatePath, 'utf8');
 
-    html = html.replace('{{nome}}', usuario.nome);
-    html = html.replace('{{id_user}}', usuario.id_user);
-    html = html.replace('{{email}}', usuario.email);
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: req.body.email,
-      subject: '✅ PARABÉNS - Conta ativada com sucesso!',
-      html: html
+    let mailOptions = {
+      from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
+      to: 'humberto@trustsystemalert.com.br',
+      subject: "✅ Nova conta criada",
+      html: htmlContent, // Usa o HTML modificado como corpo do email
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-        return res.status(500).send('Erro ao enviar e-mail.');
-      } else {
-        console.log('Email enviado: ' + info.response);
-        return res.status(200).send('E-mail de ativação enviado com sucesso.');
-      }
-    });
-
+    //       // Envia o email
+    let info = await transporter.sendMail(mailOptions);
+    console.log("Mensagem enviada: %s", info.messageId);
+    res.send("Email enviado com sucesso!");
   } catch (error) {
-    console.log(error);
-    res.status(500).send('Erro no servidor.');
+    console.error("Erro ao enviar email: ", error);
+    res.send("Erro ao enviar email.");
   }
 };
+
 
 const uploadImage = async (req, res) => {
 
@@ -278,6 +277,8 @@ module.exports = {
   getImage,
   uploadImage,
   atualizarDadosUsuario,
+
   enviarBoasVindas,
-  enviarAtivacao
+  enviarAdmConta,
+  
 };

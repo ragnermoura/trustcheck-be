@@ -30,7 +30,7 @@ const Usuario = conn.define("tb001_usuario", {
   },
   avatar: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   id_nivel: {
     type: DataTypes.INTEGER,

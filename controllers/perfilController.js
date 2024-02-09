@@ -1,6 +1,12 @@
 
 const Perfil = require("../models/tb_perfil");
 
+const path = require('path');
+const fs = require("fs").promises;
+const nodemailer = require("nodemailer");
+
+require('dotenv').config();
+
 const obterPerfil = async (req, res, next) => {
     try {
         const perfil = await Perfil.findAll();
@@ -69,9 +75,12 @@ const cadastrarPerfil = async (req, res, next) => {
             cnpj: req.body.cnpj,
             cpf: req.body.cpf,
             telefone: req.body.telefone,
+            telefone2: req.body.telefone2,
+            aniversario: req.body.aniversario,
             cep: req.body.cep,
             endereco: req.body.endereco,
             tem_cnpj: req.body.tem_cnpj,
+            termos: req.body.termos,
             id_user: req.body.id_user,
         });
         const response = {
@@ -96,9 +105,8 @@ const cadastrarPerfil = async (req, res, next) => {
 };
 const uploadRg = async (req, res) => {
 
-    const { id_perfil } = req.params
-
-    const { filename } = req.file
+    const { id_perfil } = req.params;
+    const { filename } = req.file;
 
     const update = {
         pdf_rg: `/documentos/${filename}`
@@ -211,6 +219,48 @@ const getCnpj = async (req, res) => {
 
 };
 
+const enviarAlertDoc = async (req, res) => {
+    const { email } = req.body;
+    const nome = 'Humberto'
+    try {
+      const htmlFilePath = path.join(__dirname, '../template/alerts/documentos.html');
+      let htmlContent = await fs.readFile(htmlFilePath, "utf8");
+  
+      htmlContent = htmlContent
+        .replace("{{nome}}", nome)
+        .replace("{{emailclient}}", email)
+  
+      let transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: true, // true para porta 465, false para outras portas
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+          ciphers: "TLSv1",
+        },
+      });
+  
+  
+      let mailOptions = {
+        from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
+        to: 'humberto@trustsystemalert.com.br',
+        subject: "✅ Novos doumentos enviados...",
+        html: htmlContent, // Usa o HTML modificado como corpo do email
+      };
+  
+      //       // Envia o email
+      let info = await transporter.sendMail(mailOptions);
+      console.log("Mensagem enviada: %s", info.messageId);
+      res.send("Email enviado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao enviar email: ", error);
+      res.send("Erro ao enviar email.");
+    }
+  };
+
 module.exports = {
     obterPerfil,
     obterPerfilPorId,
@@ -221,4 +271,5 @@ module.exports = {
     getRg,
     uploadCnpj,
     getCnpj,
+    enviarAlertDoc
 };

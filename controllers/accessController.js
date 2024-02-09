@@ -1,8 +1,9 @@
 const express = require("express");
 const Acesso = require("../models/tb_acesso");
-const nodemailer = require('nodemailer');
-const fs = require('fs');
 const path = require('path');
+const fs = require("fs").promises;
+const nodemailer = require("nodemailer");
+
 require('dotenv').config()
 
 const novoAcesso = async (req, res, next) => {
@@ -41,94 +42,46 @@ const novoAcesso = async (req, res, next) => {
     }
 };
 
-// const enviarEmailAcesso = async (acesso, email) => {
-//     try {
-//         const transporter = nodemailer.createTransport({
-//             pool: true,
-//             host: "mail.trustsystemalert.com.br",
-//             port: 465,  
-//             secure: true,
-//             auth: {
-//                 user: "noreply@trustsystemalert.com.br",
-//                 pass: "p(,;WM5dIY4b"
-//             },
-//             tls: {
-//                 rejectUnauthorized: false,
-//             },
-
-//         });
-
-//         const templatePath = path.join(__dirname, "../template/access.html");
-//         let html = fs.readFileSync(templatePath, 'utf8');
-
-//         html = html.replace('{{nome}}', acesso.nome);
-//         html = html.replace('{{regiao}}', acesso.regiao);
-//         html = html.replace('{{plataforma}}', acesso.plataforma);
-//         html = html.replace('{{navegador}}', acesso.navegador);
-//         html = html.replace('{{enderecoip}}', acesso.enderecoIp);
-
-//         const mailOptions = {
-//             from: "noreply@trustsystemalert.com.br",
-//             to: 'ragnermoura@gmail.com',
-//             subject: '🚨 Alerta de Novo Acesso!',
-//             html: html
-//         };
-
-//         const info = await transporter.sendMail(mailOptions);
-
-//         console.log('Email enviado: ' + info.response);
-//         return { success: true, message: 'E-mail de alerta de acesso enviado com sucesso.' };
-//     } catch (error) {
-//         console.log(error);
-//         return { success: false, message: 'Erro ao enviar e-mail.' };
-//     }
-// };
-
 const enviarEmailAcesso = async (req, res) => {
+    const { email, nome, regiao, plataforma, navegador, enderecoIp } = req.body;
     try {
-
-        const { nome, regiao, plataforma, navegador, enderecoIp, email } = req.body;
-
-        const transporter = nodemailer.createTransport({
-            name: process.env.NAME,
-            host: process.env.HOST,
-            service: process.env.HOST,
-            port: process.env.PORTA,
-            secure: process.env.SECURITY,
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.SENHA
-            },
-            tls: {
-                rejectUnauthorized: false,
-            },
-
-        });
-
-        const templatePath = path.join(__dirname, "../template/access.html");
-        let html = fs.readFileSync(templatePath, 'utf8');
-
-        html = html.replace('{{nome}}', nome);
-        html = html.replace('{{regiao}}', regiao);
-        html = html.replace('{{plataforma}}', plataforma);
-        html = html.replace('{{navegador}}', navegador);
-        html = html.replace('{{enderecoip}}', enderecoIp);
-
-
-        const mailOptions = {
-            from: process.env.EMAIL,
-            to: email,
-            subject: '🚨 Alerta de Novo Acesso!',
-            html: html
-        };
-
-        const info = await transporter.sendMail(mailOptions);
-
-        console.log('Email enviado: ' + info.response);
-        res.status(200).json({ success: true, message: 'E-mail de alerta de acesso enviado com sucesso para o destinatário:' + email });
+      const htmlFilePath = path.join(__dirname, '../template/acesso/index.html');
+      let htmlContent = await fs.readFile(htmlFilePath, "utf8");
+  
+      htmlContent = htmlContent
+      .replace("{{nome}}", nome)
+      .replace("{{regiao}}", regiao)
+      .replace("{{plataforma}}", plataforma)
+      .replace("{{navegador}}", navegador)
+      .replace("{{enderecoIp}}", enderecoIp);
+  
+      let transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: true, // true para porta 465, false para outras portas
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+          ciphers: "SSLv3",
+        },
+      });
+  
+  
+      let mailOptions = {
+        from: `"Segurança Trust" ${process.env.EMAIL_FROM}`,
+        to: email,
+        subject: "🚨 Detectamos um novo acesso...",
+        html: htmlContent, // Usa o HTML modificado como corpo do email
+      };
+  
+      let info = await transporter.sendMail(mailOptions);
+      console.log("Mensagem enviada: %s", info.messageId);
+      res.send("Email enviado com sucesso!");
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false, message: 'Erro ao enviar e-mail.' });
+      console.error("Erro ao enviar email: ", error);
+      res.send("Erro ao enviar email.");
     }
 };
 

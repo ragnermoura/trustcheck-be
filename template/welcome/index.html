@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+        * {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+        }
+
+        body {
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 600px;
+            margin: auto;
+            display: block;
+            background-color: #ffffff !important;
+
+        }
+
+        .bannerOne img {
+            display: block;
+            /* Isso ajuda a remover o espaço extra abaixo da imagem */
+            width: 100%;
+            /* Faz a imagem se ajustar à largura do container */
+            height: auto;
+            /* Mantém a proporção da imagem */
+        }
+
+        .bannerTwo img {
+            display: block;
+            /* Isso ajuda a remover o espaço extra abaixo da imagem */
+            width: 100%;
+            /* Faz a imagem se ajustar à largura do container */
+            height: auto;
+            margin-top: 5%;
+            /* Mantém a proporção da imagem */
+        }
+
+        .logo img {
+            display: block;
+            /* Isso ajuda a remover o espaço extra abaixo da imagem */
+            width: 50%;
+            /* Faz a imagem se ajustar à largura do container */
+            margin-left: auto;
+            margin-right: auto;
+            /* Mantém a proporção da imagem */
+        }
+
+        .icon img {
+            display: block;
+            /* Isso ajuda a remover o espaço extra abaixo da imagem */
+            width: 15%;
+            /* Faz a imagem se ajustar à largura do container */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 3%;
+            /* Mantém a proporção da imagem */
+        }
+        .icon-logo img {
+            display: block;
+            /* Isso ajuda a remover o espaço extra abaixo da imagem */
+            width: 5%;
+            /* Faz a imagem se ajustar à largura do container */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10%;
+            /* Mantém a proporção da imagem */
+        }
+        .quadro img {
+            display: block;
+            /* Isso ajuda a remover o espaço extra abaixo da imagem */
+            width: 70%;
+            /* Faz a imagem se ajustar à largura do container */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 15%;
+            /* Mantém a proporção da imagem */
+        }
+
+
+
+        .title {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #3A3A3A;
+            text-align: center;
+        }
+        .titleTwo {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #3A3A3A;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10%;
+        }
+
+        .subtitle {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #3A3A3A;
+            text-align: center;
+            font-weight: 300;
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+        .subtitlePass {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #3A3A3A;
+            text-align: center;
+            font-weight: 300;
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+
+        .subtitleTwo {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #6F6666;
+            text-align: center;
+            font-weight: 300;
+            padding-left: 100px;
+            padding-right: 100px;
+            margin-top: 5%;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .acesso {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .button img {
+            display: block;
+            /* Isso ajuda a remover o espaço extra abaixo da imagem */
+            width: 50%;
+            /* Faz a imagem se ajustar à largura do container */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5%;
+            /* Mantém a proporção da imagem */
+        }
+
+        .area_acesso {
+            margin-top: 10%;
+        }
+
+        .msg {
+            margin-top: 3%;
+            color: #2854C6;
+            font-size: 11px;
+            font-weight: 100;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .footer {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            color: #BDBDBD;
+            text-align: center;
+            margin-top: 3%;
+        }
+
+        .text-simple{
+            font-family: Arial, Helvetica, sans-serif;
+            color: #3A3A3A;
+            text-align: center;
+            font-weight: 100;
+            padding-left: 100px;
+            padding-right: 100px;
+            margin-top: 2%;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="bannerOne">
+            <img src="https://trustchecker.com.br/email/banner/banner.png" alt="">
+        </div>
+        <div>
+            <div class="icon">
+                <img src="https://trustchecker.com.br/email/icons/iconCheck.png" alt="">
+            </div>
+        </div>
+        <div>
+            <h1 class="title">Sucesso, {{nome}}!</h1>
+            <h3 class="subtitle"><strong>Sua conta acaba de ser criada. Aguade 48h até que tudo esteja liberado</strong> </h3>
+            <h5 class="text-simple">Precisamos validar alguns documentos. Clique no botão abaixo para fazer upload dos seus documentos.</h5>
+        </div>
+       
+
+        <a class="button" href="https://trustchecker.com.br/send-document?id={{id}}&email={{emailclient}}&perfil={{perfil}}" target="_blank"> 
+            <img src="https://trustchecker.com.br/email/buttons/btnSendDoc.png" alt="">
+        </a>
+        
+
+        <div class="quadro">
+          <img src="https://trustchecker.com.br/email/cards/card.png" alt="">
+        </div>
+ 
+        <div>
+            <div class="icon-logo">
+                <img src="https://trustchecker.com.br/email/icons/logomin.png" alt="">
+            </div>
+            <p class="footer">This e-mail was sent by the security department of <strong>Trust Checker</strong></p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -10,10 +10,12 @@ router.patch("/edit", userController.atualizarUsuario);
 router.patch("/dados", userController.atualizarDadosUsuario);
 router.delete("/delete", userController.excluirUsuario);
 router.post("/cadastro", userController.cadastrarUsuario);
+
 router.patch("/upload-user-image/:id_user", imageUpload.single('avatar') ,userController.uploadImage);
 router.get("/getImage/:id_user", userController.getImage);
 
 router.post("/enviar-boas-vindas", userController.enviarBoasVindas);
-router.post("/enviar-ativacao", userController.enviarAtivacao);
+router.post("/aviso-admin", userController.enviarAdmConta);
+
 
 module.exports = router;

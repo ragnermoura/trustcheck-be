@@ -24,7 +24,7 @@ const autenticarUsuario = async (req, res, next) => {
           nome: user.nome,
           sobrenome: user.sobrenome,
           email: user.email,
-          senha: user.senha,
+          avatar: user.avatar,
           id_plano: user.id_plano,
           id_nivel: user.id_nivel,
           id_status: user.id_status,
@@ -38,6 +38,8 @@ const autenticarUsuario = async (req, res, next) => {
       return res.status(200).send({
         mensagem: "Autenticado com sucesso!",
         token: token,
+        id_status: user.id_status
+
       });
     } else {
       return res.status(401).send({ mensagem: "Falha na autenticação." });
