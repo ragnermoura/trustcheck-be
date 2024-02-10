@@ -98,7 +98,8 @@ const cadastrarUsuario = async (req, res, next) => {
       senha: hashedPassword,
       id_plano: req.body.id_plano,
       id_status: req.body.status,
-      id_nivel: req.body.nivel,
+      id_nivel: req.body.nivel
+     
       
     });
     const response = {
@@ -111,7 +112,7 @@ const cadastrarUsuario = async (req, res, next) => {
         request: {
           tipo: "GET",
           descricao: "Pesquisar um usuário",
-          url: `http://localhost:3000/usuarios/${novoUsuario.id_user}`,
+          url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
         },
       },
     };
@@ -121,7 +122,6 @@ const cadastrarUsuario = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
 
 
 const enviarBoasVindas = async (req, res) => {

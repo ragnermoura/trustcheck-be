@@ -93,7 +93,7 @@ const cadastrarPerfil = async (req, res, next) => {
                 request: {
                     tipo: "GET",
                     descricao: "Pesquisar um usuário",
-                    url: `http://localhost:3000/perfil/${novoperfil.id_perfil}`,
+                    url: `https://trustchecker.com.br/api/perfil/${novoperfil.id_perfil}`,
                 },
             },
         };
