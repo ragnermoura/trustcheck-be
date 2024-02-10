@@ -1,15 +1,23 @@
 
 const Perfil = require("../models/tb_perfil");
+const Usuario = require("../models/tb_");
 
 const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
 
+
 require('dotenv').config();
 
 const obterPerfil = async (req, res, next) => {
     try {
-        const perfil = await Perfil.findAll();
+        const perfil = await Perfil.findAll({
+            include: [{
+                model: Usuario,
+                as: 'usuario', 
+                attributes: ['*'] 
+            }]
+        });
         return res.status(200).send({ response: perfil });
     } catch (error) {
         return res.status(500).send({ error: error.message });
