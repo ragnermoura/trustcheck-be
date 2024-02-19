@@ -1,6 +1,6 @@
 
 const Perfil = require("../models/tb_perfil");
-const Usuario = require("../models/tb_");
+const Usuario = require("../models/tb_acesso");
 
 const path = require('path');
 const fs = require("fs").promises;

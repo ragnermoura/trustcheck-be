@@ -67,12 +67,14 @@ const atualizarDadosUsuario = async (req, res, next) => {
 };
 const excluirUsuario = async (req, res, next) => {
   try {
-    const usuario = await User.findByPk(req.body.id_user);
-    if (!usuario) {
-      return res.status(404).send({ message: "Usuário não encontrado" });
+    const deletado = await Status.destroy({
+      where: { id_user: req.params.id_user }
+    });
+    if (deletado) {
+      return res.status(200).send({ message: 'Usuário excluido com sucesso!' });
+    } else {
+      return res.status(404).send({ message: 'Usuário não encontrado' });
     }
-    await usuario.destroy();
-    return res.status(202).send({ mensagem: "Usuário excluído com sucesso!" });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
