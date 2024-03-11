@@ -8,15 +8,23 @@ const Plano = conn.define("tb006_plano", {
         autoIncrement: true,
         primaryKey: true,
     },
-    nome_plano: {
+    titulo_plano: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    valor_plano: {
+    subtitulo_plano: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    descricao: {
+    valor_plano_consulta: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    valor_plano_mes: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    tag: {
         type: DataTypes.STRING,
         allowNull: false,
     },

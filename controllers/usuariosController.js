@@ -67,7 +67,7 @@ const atualizarDadosUsuario = async (req, res, next) => {
 };
 const excluirUsuario = async (req, res, next) => {
   try {
-    const deletado = await Status.destroy({
+    const deletado = await User.destroy({ 
       where: { id_user: req.params.id_user }
     });
     if (deletado) {
