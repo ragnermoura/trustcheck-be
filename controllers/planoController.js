@@ -35,6 +35,15 @@ const buscarTodosPlanos = async (req, res) => {
   }
 };
 
+const buscarTodosItens = async (req, res) => {
+  try {
+    const items = await ItemPlano.findAll();
+    res.send(items);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+};
+
 const buscarPlanoPorId = async (req, res) => {
   try {
       const id_plano = req.params.id_plano;
@@ -108,5 +117,6 @@ module.exports = {
   buscarTodosPlanos,
   buscarPlanoPorId,
   atualizarPlano,
-  deletarPlano
+  deletarPlano,
+  buscarTodosItens
 };
