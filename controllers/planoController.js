@@ -28,21 +28,11 @@ const criarPlano = async (req, res) => {
 
 const buscarTodosPlanos = async (req, res) => {
   try {
-    const planos = await ItemPlano.findAll({
-        include: [{
-            model: Plano,
-            as: 'allPlanos', 
-        }]
-    });
-
-    if (planos.length === 0) {
-        return res.status(404).send({ mensagem: "Nenhum plano encontrado." });
-    }
-
+    const planos = await Plano.findAll();
     res.send(planos);
-} catch (error) {
+  } catch (error) {
     res.status(500).send({ error: error.message });
-}
+  }
 };
 
 const buscarPlanoPorId = async (req, res) => {
