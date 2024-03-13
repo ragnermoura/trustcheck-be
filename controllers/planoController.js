@@ -28,23 +28,40 @@ const criarPlano = async (req, res) => {
 
 const buscarTodosPlanos = async (req, res) => {
   try {
-    const planos = await Plano.findAll();
+    const planos = await Plano.findAll({
+        include: [{
+            model: ItemPlano,
+            as: 'ItensPlano', 
+        }]
+    });
+
+    if (planos.length === 0) {
+        return res.status(404).send({ mensagem: "Nenhum plano encontrado." });
+    }
+
     res.send(planos);
-  } catch (error) {
+} catch (error) {
     res.status(500).send({ error: error.message });
-  }
+}
 };
 
 const buscarPlanoPorId = async (req, res) => {
   try {
-    const id_plano = req.params.id_plano;
-    const plano = await Plano.findByPk(id_plano);
-    if (!plano) {
-      return res.status(404).send({ mensagem: "Plano não encontrado." });
-    }
-    res.send(plano);
+      const id_plano = req.params.id_plano;
+      const plano = await Plano.findByPk(id_plano, {
+          include: [{
+              model: ItemPlano,
+              as: 'ItensPlano',
+          }]
+      });
+
+      if (!plano) {
+          return res.status(404).send({ mensagem: "Plano não encontrado." });
+      }
+
+      res.send(plano);
   } catch (error) {
-    res.status(500).send({ error: error.message });
+      res.status(500).send({ error: error.message });
   }
 };
 
