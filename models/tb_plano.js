@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const conn = require("../data/conn");
 
 
-const Plano = conn.define("tb006_plano", {
+const Plano = conn.define("tb_plano", {
     id_plano: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -17,6 +17,10 @@ const Plano = conn.define("tb006_plano", {
         allowNull: false,
     },
     valor_plano_consulta: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    dias_free: {
         type: DataTypes.STRING,
         allowNull: false,
     },

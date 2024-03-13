@@ -4,7 +4,7 @@ const conn = require("../data/conn");
 const Usuario = require("./tb_usuarios");
 
 const Logs = conn.define(
-    "tb007_logs",
+    "tb_logs",
     {
         id_log: {
             type: DataTypes.INTEGER,

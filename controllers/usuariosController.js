@@ -156,7 +156,7 @@ const enviarBoasVindas = async (req, res) => {
       from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
       to: email,
       subject: "✅ Conta criada com sucesso!",
-      html: htmlContent, // Usa o HTML modificado como corpo do email
+      html: htmlContent,
     };
 
     let info = await transporter.sendMail(mailOptions);
@@ -183,7 +183,7 @@ const enviarAdmConta = async (req, res) => {
     let transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
-      secure: true, // true para porta 465, false para outras portas
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -196,12 +196,11 @@ const enviarAdmConta = async (req, res) => {
 
     let mailOptions = {
       from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
-      to: 'humberto@trustsystemalert.com.br',
+      to: 'humberto@trustsystemalert.com.br, ragnermoura@gmail.com',
       subject: "✅ Nova conta criada",
-      html: htmlContent, // Usa o HTML modificado como corpo do email
+      html: htmlContent,
     };
 
-    //       // Envia o email
     let info = await transporter.sendMail(mailOptions);
     console.log("Mensagem enviada: %s", info.messageId);
     res.send("Email enviado com sucesso!");

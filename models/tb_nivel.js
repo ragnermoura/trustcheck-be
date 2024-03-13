@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const conn = require("../data/conn");
 
 const Nivel = conn.define(
-  "tb004_nivel",
+  "tb_nivel",
   {
     id_nivel: {
       type: DataTypes.INTEGER,

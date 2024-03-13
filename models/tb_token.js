@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const conn = require("../data/conn");
 
 const Token = conn.define(
-  "tb005_token",
+  "tb_token",
   {
     id_token: {
       type: DataTypes.INTEGER,

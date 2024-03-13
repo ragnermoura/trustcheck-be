@@ -1,10 +1,24 @@
 const express = require("express");
 const Plano = require("../models/tb_plano");
+const ItemPlano = require("../models/tb_plano_item");
+
 
 const criarPlano = async (req, res) => {
   try {
-    const { titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, tag } = req.body;
-    const plano = await Plano.create({ titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, tag });
+    const { titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, tag, ofertas } = req.body;
+    const plano = await Plano.create({ titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, tag });
+
+    if (ofertas && ofertas.length > 0) {
+      const itensPlano = ofertas.map(oferta => {
+        return {
+          item: oferta,
+          id_plano: plano.id_plano 
+        };
+      });
+
+      await ItemPlano.bulkCreate(itensPlano);
+    }
+
     res.status(201).send(plano);
   } catch (error) {
     res.status(500).send({ error: error.message });
@@ -36,7 +50,7 @@ const buscarPlanoPorId = async (req, res) => {
 const atualizarPlano = async (req, res) => {
   try {
     const id_plano = req.paraid_plano;
-    const { titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, tag } = req.body;
+    const { titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, tag } = req.body;
 
     const plano = await Plano.findByPk(id_plano);
     if (!plano) {
@@ -47,6 +61,7 @@ const atualizarPlano = async (req, res) => {
     plano.subtitulo_plano = subtitulo_plano;
     plano.valor_plano_consulta = valor_plano_consulta;
     plano.valor_plano_mes = valor_plano_mes;
+    plano.dias_free = dias_free;
     plano.tag = tag;
 
     await plano.save();

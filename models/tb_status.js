@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const conn = require("../data/conn");
 
 const Status = conn.define(
-  "tb003_status",
+  "tb_status",
   {
     id_status: {
       type: DataTypes.INTEGER,

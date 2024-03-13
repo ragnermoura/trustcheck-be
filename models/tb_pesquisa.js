@@ -4,7 +4,7 @@ const conn = require("../data/conn");
 const Usuario = require("./tb_usuarios");
 
 const Pesquisa = conn.define(
-    "tb009_pesquisa",
+    "tb_pesquisa",
     {
         id_pesquisa: {
             type: DataTypes.INTEGER,

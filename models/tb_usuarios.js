@@ -5,7 +5,7 @@ const Nivel = require("./tb_nivel");
 const Status = require("./tb_status");
 const Plano = require("./tb_plano");
 
-const Usuario = conn.define("tb001_usuario", {
+const Usuario = conn.define("tb_usuario", {
   id_user: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
