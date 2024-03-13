@@ -28,10 +28,10 @@ const criarPlano = async (req, res) => {
 
 const buscarTodosPlanos = async (req, res) => {
   try {
-    const planos = await Plano.findAll({
+    const planos = await ItemPlano.findAll({
         include: [{
-            model: ItemPlano,
-            as: 'ItensPlano', 
+            model: Plano,
+            as: 'allPlanos', 
         }]
     });
 
