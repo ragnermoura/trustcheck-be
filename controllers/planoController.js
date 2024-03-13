@@ -8,6 +8,7 @@ const criarPlano = async (req, res) => {
     const { titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, tag, ofertas } = req.body;
     const plano = await Plano.create({ titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, tag });
 
+   
     if (ofertas && ofertas.length > 0) {
       const itensPlano = ofertas.map(oferta => {
         return {
@@ -75,17 +76,25 @@ const atualizarPlano = async (req, res) => {
 const deletarPlano = async (req, res) => {
   try {
     const id_plano = req.params.id_plano;
+  
+    await ItemPlano.destroy({
+      where: {
+        id_plano: id_plano
+      }
+    });
+
     const plano = await Plano.findByPk(id_plano);
     if (!plano) {
       return res.status(404).send({ mensagem: "Plano não encontrado." });
     }
 
     await plano.destroy();
-    res.send({ mensagem: "Plano deletado com sucesso!" });
+    res.send({ mensagem: "Plano e itens relacionados deletados com sucesso!" });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
 };
+
 
 module.exports = {
   criarPlano,

@@ -125,7 +125,6 @@ const cadastrarUsuario = async (req, res, next) => {
   }
 };
 
-
 const enviarBoasVindas = async (req, res) => {
   const { email, nome, id, perfil } = req.body;
   try {
@@ -167,7 +166,6 @@ const enviarBoasVindas = async (req, res) => {
     res.send("Erro ao enviar email.");
   }
 };
-
 const enviarAdmConta = async (req, res) => {
   const { email, nomecliente } = req.body;
   const nome = 'Humberto'
