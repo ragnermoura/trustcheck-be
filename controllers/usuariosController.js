@@ -100,7 +100,6 @@ const cadastrarUsuario = async (req, res, next) => {
       sobrenome: req.body.sobrenome,
       email: req.body.email,
       senha: hashedPassword,
-      id_plano: req.body.plano || 3,
       id_status: req.body.status,
       id_nivel: req.body.nivel,
     });
@@ -130,7 +129,6 @@ const cadastrarUsuario = async (req, res, next) => {
       },
       perfilCriado: {
         id_perfil: novoPerfil.id_perfil,
-        // Outras informações do perfil se necessário
       },
       request: {
         tipo: "GET",
