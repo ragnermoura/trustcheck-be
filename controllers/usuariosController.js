@@ -145,7 +145,6 @@ const cadastrarUsuario = async (req, res, next) => {
   }
 };
 
-
 const enviarBoasVindas = async (req, res) => {
   const { email, nome, id, perfil } = req.body;
   try {
