@@ -42,7 +42,7 @@ const Usuario = conn.define("tb_usuario", {
   },
   id_plano: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 
 }, { freezeTableName: true });

@@ -100,7 +100,7 @@ const cadastrarUsuario = async (req, res, next) => {
       sobrenome: req.body.sobrenome,
       email: req.body.email,
       senha: hashedPassword,
-      id_plano: req.body.plano || 1,
+      id_plano: req.body.plano || 3,
       id_status: req.body.status,
       id_nivel: req.body.nivel,
     });
