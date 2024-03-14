@@ -12,7 +12,7 @@ const Plano = conn.define("tb_plano", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    subtitulo_plano: {
+    subtitulo_plano: {      
         type: DataTypes.STRING,
         allowNull: false,
     },
