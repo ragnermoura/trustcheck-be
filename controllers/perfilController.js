@@ -92,10 +92,8 @@ const cadastrarPerfil = async (req, res, next) => {
             id_user: req.body.id_user,
         });
 
-        console.log('Chegou as informações no backend ===> ', novoperfil);
-        
         const response = {
-            mensagem: "Usuário cadastrado com sucesso",
+            mensagem: "Perfil do usuário cadastrado com sucesso",
             perfilCriado: {
                 id_perfil: novoperfil.id_perfil,
                 razao_social: novoperfil.razao_social,
