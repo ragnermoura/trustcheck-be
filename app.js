@@ -7,6 +7,9 @@ const cors = require('cors')
 
 require('dotenv').config();
 
+const Plano = require('./models/tb_plano');
+const ItemPlano = require('./models/tb_plano_item');
+
 const rotaAcesso = require('./routes/access');
 const rotaLog = require('./routes/log');
 const rotaLogin = require('./routes/login');
@@ -71,6 +74,15 @@ app.use((error, req, res, next) => {
             mensagem: error.mensagem
         }
     })
+});
+
+
+Plano.hasMany(ItemPlano, {
+  foreignKey: 'id_plano',
+});
+
+ItemPlano.belongsTo(Plano, {
+  foreignKey: 'id_plano',
 });
 
 module.exports = app;
