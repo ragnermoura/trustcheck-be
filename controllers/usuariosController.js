@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
 const User = require("../models/tb_usuarios");
+const Consulta = require("../models/tb_consulta_count");
 
 require('dotenv').config();
 
@@ -112,6 +113,33 @@ const cadastrarUsuario = async (req, res, next) => {
         request: {
           tipo: "GET",
           descricao: "Pesquisar um usuário",
+          url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
+        },
+      },
+    };
+
+    return res.status(202).send(response);
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+};
+
+
+const cadastrarConsultas = async (req, res, next) => {
+  try {
+    const credito = await Consulta.create({
+      id_user: req.body.id_user,
+      consultas: req.body.consultas,
+
+    });
+    const response = {
+      mensagem: "Créditos cadastrados com sucesso",
+      usuarioCriado: {
+        id_user: credito.id_user,
+        consultas: credito.consultas,
+        request: {
+          tipo: "GET",
+          descricao: "Pesquisar os usuário",
           url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
         },
       },
@@ -274,8 +302,10 @@ module.exports = {
   getImage,
   uploadImage,
   atualizarDadosUsuario,
+  cadastrarConsultas,
 
   enviarBoasVindas,
   enviarAdmConta,
+
 
 };

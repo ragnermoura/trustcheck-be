@@ -40,7 +40,6 @@ const buscarTodosPlanos = async (req, res) => {
   }
 };
 
-
 const buscarTodosItens = async (req, res) => {
   try {
     const items = await ItemPlano.findAll();

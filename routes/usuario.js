@@ -11,6 +11,7 @@ router.patch("/plano", userController.atualizarDadosUsuario);
 
 router.delete("/delete/:id_user", userController.excluirUsuario);
 router.post("/cadastro", userController.cadastrarUsuario);
+router.post("/credito", userController.cadastrarConsultas);
 
 router.patch("/upload-user-image/:id_user", imageUpload.single('avatar'), userController.uploadImage);
 router.get("/getImage/:id_user", userController.getImage);
