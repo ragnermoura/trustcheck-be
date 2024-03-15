@@ -2,19 +2,26 @@ const bcrypt = require("bcrypt");
 const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
-const User = require("../models/tb_usuarios");
 const Consulta = require("../models/tb_consulta_count");
+const User = require("../models/tb_usuarios");
+const Perfil = require("../models/tb_perfil");
 
 require('dotenv').config();
 
 const obterUsuarios = async (req, res, next) => {
   try {
-    const usuarios = await User.findAll();
+    const usuarios = await User.findAll({
+      include: [{
+        model: Perfil,
+        as: 'Perfil'
+      }]
+    });
     return res.status(200).send({ response: usuarios });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
 };
+
 const obterUsuarioPorId = async (req, res, next) => {
   try {
     const usuario = await User.findByPk(req.params.id_user);

@@ -9,6 +9,8 @@ require('dotenv').config();
 
 const Plano = require('./models/tb_plano');
 const ItemPlano = require('./models/tb_plano_item');
+const Perfil = require('./models/tb_perfil');
+const Usuarios = require('./models/tb_usuarios');
 
 const rotaAcesso = require('./routes/access');
 const rotaLog = require('./routes/log');
@@ -85,6 +87,17 @@ Plano.hasMany(ItemPlano, {
 ItemPlano.belongsTo(Plano, {
     foreignKey: 'id_plano',
     as: 'Plano'
+});
+
+
+Usuarios.hasMany(Perfil, {
+    foreignKey: 'id_user',
+    as: 'Perfil'
+});
+
+Perfil.belongsTo(Usuarios, {
+    foreignKey: 'id_user',
+    as: 'Usuario'
 });
 
 module.exports = app;
