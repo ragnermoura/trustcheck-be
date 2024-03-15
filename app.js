@@ -55,8 +55,8 @@ app.use('/token', rotaToken);
 app.use('/usuarios', rotaUsuarios);
 
 
-app.get('/api/test', (req,res) => {
-    res.status(200).json({message: 'OK'})
+app.get('/api/test', (req, res) => {
+    res.status(200).json({ message: 'OK' })
 })
 
 app.use(express.static('public'))
@@ -78,11 +78,13 @@ app.use((error, req, res, next) => {
 
 
 Plano.hasMany(ItemPlano, {
-  foreignKey: 'id_plano',
+    foreignKey: 'id_plano',
+    as: 'itensPlano'
 });
 
 ItemPlano.belongsTo(Plano, {
-  foreignKey: 'id_plano',
+    foreignKey: 'id_plano',
+    as: 'Plano'
 });
 
 module.exports = app;
