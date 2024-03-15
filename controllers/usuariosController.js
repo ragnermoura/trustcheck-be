@@ -46,21 +46,23 @@ const atualizarUsuario = async (req, res, next) => {
 };
 const atualizarDadosUsuario = async (req, res, next) => {
   try {
+    console.log("Requisição recebida:", req.body);
     const usuario = await User.findByPk(req.body.id_user);
     if (!usuario) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
+    console.log("Usuário antes da atualização:", usuario.toJSON());
     usuario.id_plano = req.body.plano;
 
-
     await usuario.save();
-    return res
-      .status(201)
-      .send({ mensagem: "Dados de usuário alterados com sucesso!" });
+    console.log("Usuário após a atualização:", usuario.toJSON()); 
+    return res.status(201).send({ mensagem: "Dados de usuário alterados com sucesso!" });
   } catch (error) {
+    console.error("Erro na atualização do usuário:", error); 
     return res.status(500).send({ error: error.message });
   }
 };
+
 const excluirUsuario = async (req, res, next) => {
   try {
     const deletado = await User.destroy({
