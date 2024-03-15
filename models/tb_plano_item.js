@@ -3,7 +3,7 @@ const conn = require("../data/conn");
 
 const Plano = require("./tb_plano");
 
-const Itemplano = conn.define("tb_item_plano", {
+const ItemPlano = conn.define("tb_item_plano", {
     id_item: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -20,9 +20,9 @@ const Itemplano = conn.define("tb_item_plano", {
 
 }, { freezeTableName: true });
 
-Itemplano.belongsTo(Plano, {
+ItemPlano.belongsTo(Plano, {
     foreignKey: "id_plano",
     foreignKeyConstraint: true,
   });
 
-module.exports = Itemplano;
+module.exports = ItemPlano;
