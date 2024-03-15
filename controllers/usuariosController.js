@@ -50,12 +50,8 @@ const atualizarDadosUsuario = async (req, res, next) => {
     if (!usuario) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
-    usuario.education = req.body.education;
-    usuario.phonenumber = req.body.phonenumber;
-    usuario.address = req.body.address;
-    usuario.zipcode = req.body.zipcode;
-    usuario.country = req.body.country;
-    usuario.language = req.body.language;
+    usuario.id_plano = req.body.plano;
+
 
     await usuario.save();
     return res
@@ -67,7 +63,7 @@ const atualizarDadosUsuario = async (req, res, next) => {
 };
 const excluirUsuario = async (req, res, next) => {
   try {
-    const deletado = await User.destroy({ 
+    const deletado = await User.destroy({
       where: { id_user: req.params.id_user }
     });
     if (deletado) {
@@ -100,8 +96,8 @@ const cadastrarUsuario = async (req, res, next) => {
       senha: hashedPassword,
       id_status: req.body.status,
       id_nivel: req.body.nivel
-     
-      
+
+
     });
     const response = {
       mensagem: "Usuário cadastrado com sucesso",
@@ -278,5 +274,5 @@ module.exports = {
 
   enviarBoasVindas,
   enviarAdmConta,
-  
+
 };

@@ -7,7 +7,7 @@ const { imageUpload } = require("../helpers/file-uploader");
 router.get("/", userController.obterUsuarios);
 router.get("/:id_user", userController.obterUsuarioPorId);
 router.patch("/edit", userController.atualizarUsuario);
-router.patch("/dados", userController.atualizarDadosUsuario);
+router.patch("/plano/id_user", userController.atualizarDadosUsuario);
 router.delete("/delete/:id_user", userController.excluirUsuario);
 router.post("/cadastro", userController.cadastrarUsuario);
 
