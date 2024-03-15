@@ -21,7 +21,6 @@ const obterUsuarios = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
 const obterUsuarioPorId = async (req, res, next) => {
   try {
     const usuario = await User.findByPk(req.params.id_user);
@@ -71,6 +70,24 @@ const atualizarDadosUsuario = async (req, res, next) => {
   }
 };
 
+const atualizarStatusUsuario = async (req, res, next) => {
+  try {
+    const id_user = req.body.id_user;
+    const status = req.body.id_status;
+
+    const [updated] = await User.update({ id_status: status }, { where: { id_user: id_user } });
+
+    if (updated) {
+      console.log(`Usuário atualizado com sucesso: ${id_user}`);
+      return res.status(201).send({ mensagem: "Dados de usuário alterados com sucesso!" });
+    } else {
+      return res.status(404).send({ message: "Usuário não encontrado" });
+    }
+  } catch (error) {
+    console.error("Erro na atualização do usuário:", error);
+    return res.status(500).send({ error: error.message });
+  }
+};
 
 const excluirUsuario = async (req, res, next) => {
   try {
@@ -310,6 +327,7 @@ module.exports = {
   uploadImage,
   atualizarDadosUsuario,
   cadastrarConsultas,
+  atualizarStatusUsuario,
 
   enviarBoasVindas,
   enviarAdmConta,

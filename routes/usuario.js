@@ -8,6 +8,7 @@ router.get("/", userController.obterUsuarios);
 router.get("/:id_user", userController.obterUsuarioPorId);
 router.patch("/edit", userController.atualizarUsuario);
 router.patch("/plano", userController.atualizarDadosUsuario);
+router.patch("/status", userController.atualizarStatusUsuario);
 
 router.delete("/delete/:id_user", userController.excluirUsuario);
 router.post("/cadastro", userController.cadastrarUsuario);
