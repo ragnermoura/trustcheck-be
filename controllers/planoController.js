@@ -28,12 +28,18 @@ const criarPlano = async (req, res) => {
 
 const buscarTodosPlanos = async (req, res) => {
   try {
-    const planos = await Plano.findAll();
+    const planos = await Plano.findAll({
+      include: [{
+        model: ItemPlano, 
+        as: 'itensPlano',
+      }]
+    });
     res.send(planos);
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
 };
+
 
 const buscarTodosItens = async (req, res) => {
   try {
@@ -110,7 +116,7 @@ const deletarPlano = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
-  
+
 module.exports = {
   criarPlano,
   buscarTodosPlanos,
