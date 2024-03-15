@@ -85,55 +85,37 @@ const cadastrarUsuario = async (req, res, next) => {
     const usuarioExistente = await User.findOne({
       where: { email: req.body.email },
     });
-
     if (usuarioExistente) {
-      return res.status(409).send({
-        mensagem: "Email já cadastrado, por favor insira um email diferente!",
-      });
+      return res
+        .status(409)
+        .send({
+          mensagem: "Email já cadastrado, por favor insira um email diferente!",
+        });
     }
-
     const hashedPassword = await bcrypt.hash(req.body.senha, 10);
 
-    // Criação do usuário
     const novoUsuario = await User.create({
       nome: req.body.nome,
       sobrenome: req.body.sobrenome,
       email: req.body.email,
       senha: hashedPassword,
       id_status: req.body.status,
-      id_nivel: req.body.nivel,
+      id_nivel: req.body.nivel
+     
+      
     });
-
-    const novoPerfil = await Perfil.create({
-      id_user: novoUsuario.id_user,
-      telefone: req.body.telefone,
-      telefone2: req.body.telefoneEmpresa,
-      aniversario: req.body.aniversario,
-      razao_social: req.body.razaoSocial,
-      cnpj: req.body.cnpj,
-      cpf: req.body.cpf,
-      cep: req.body.cep,
-      endereco: req.body.endereco,
-      termos: req.body.aceitaTermos,
-      tem_cnpj: req.body.temCnpj,
-    });
-
-    // Resposta incluindo as informações do usuário e do perfil
     const response = {
-      mensagem: "Usuário e perfil cadastrados com sucesso",
+      mensagem: "Usuário cadastrado com sucesso",
       usuarioCriado: {
         id_user: novoUsuario.id_user,
         nome: novoUsuario.nome,
         email: novoUsuario.email,
         nivel: novoUsuario.id_nivel,
-      },
-      perfilCriado: {
-        id_perfil: novoPerfil.id_perfil,
-      },
-      request: {
-        tipo: "GET",
-        descricao: "Pesquisar um usuário",
-        url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
+        request: {
+          tipo: "GET",
+          descricao: "Pesquisar um usuário",
+          url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
+        },
       },
     };
 
