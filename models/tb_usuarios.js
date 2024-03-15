@@ -3,7 +3,6 @@ const conn = require("../data/conn");
 
 const Nivel = require("./tb_nivel");
 const Status = require("./tb_status");
-const Plano = require("./tb_plano");
 
 const Usuario = conn.define("tb_usuario", {
   id_user: {
@@ -58,10 +57,6 @@ Usuario.belongsTo(Status, {
   foreignKeyConstraint: true,
 });
 
-Usuario.belongsTo(Plano, {
-    foreignKey: "id_plano",
-    foreignKeyConstraint: true,
-  });
 
 
 module.exports = Usuario;
