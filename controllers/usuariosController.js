@@ -46,22 +46,23 @@ const atualizarUsuario = async (req, res, next) => {
 };
 const atualizarDadosUsuario = async (req, res, next) => {
   try {
-    console.log("Requisição recebida:", req.body);
-    const usuario = await User.findByPk(req.body.id_user);
-    if (!usuario) {
+    const id_user = req.body.id_user;
+    const plano = req.body.plano;
+
+    const [updated] = await User.update({ id_plano: plano }, { where: { id_user: id_user } });
+
+    if (updated) {
+      console.log(`Usuário atualizado com sucesso: ${id_user}`);
+      return res.status(201).send({ mensagem: "Dados de usuário alterados com sucesso!" });
+    } else {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
-    console.log("Usuário antes da atualização:", usuario.toJSON());
-    usuario.id_plano = req.body.plano;
-
-    await usuario.save();
-    console.log("Usuário após a atualização:", usuario.toJSON()); 
-    return res.status(201).send({ mensagem: "Dados de usuário alterados com sucesso!" });
   } catch (error) {
-    console.error("Erro na atualização do usuário:", error); 
+    console.error("Erro na atualização do usuário:", error);
     return res.status(500).send({ error: error.message });
   }
 };
+
 
 const excluirUsuario = async (req, res, next) => {
   try {
