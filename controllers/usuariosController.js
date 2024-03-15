@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
 const User = require("../models/tb_usuarios");
-const Perfil = require("../models/tb_perfil");
 
 require('dotenv').config();
 
