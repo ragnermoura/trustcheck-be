@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const conn = require("../data/conn");
 
+const ItemPlano = require("./tb_plano_item"); 
+
 
 const Plano = conn.define("tb_plano", {
     id_plano: {
@@ -36,5 +38,8 @@ const Plano = conn.define("tb_plano", {
 }, { freezeTableName: true });
 
 
+Plano.hasMany(ItemPlano, {
+    foreignKey: 'id_plano',
+  });
 
 module.exports = Plano;
