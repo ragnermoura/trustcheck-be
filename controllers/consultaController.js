@@ -45,7 +45,7 @@ const atualizarConsulta = async (req, res, next) => {
       const id_user = req.body.id_user;
       const consultas = req.body.consultas;
   
-      const [updated] = await User.update({ consultas: consultas }, { where: { id_user: id_user } });
+      const [updated] = await Consulta.update({ consultas: consultas }, { where: { id_user: id_user } });
   
       if (updated) {
         console.log(`Consulta atualizada com sucesso: ${id_user}`);
