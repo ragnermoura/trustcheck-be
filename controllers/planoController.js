@@ -52,7 +52,7 @@ const buscarPlanoPorId = async (req, res) => {
       const planos = await Plano.findByPk(id_plano, {
           include: [{
               model: ItemPlano,
-              as: 'ItensPlano',
+              as: 'itensPlano',
           }]
       });
       res.send(planos);
