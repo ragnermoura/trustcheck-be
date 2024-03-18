@@ -1,6 +1,6 @@
 const { createCharge, generateQRCode } = require('../services/payment/pixImediato');
 
-let locId
+
 
 async function paymentPix(req, res, next) {
     const dueSeconds = 3600;
@@ -11,11 +11,18 @@ async function paymentPix(req, res, next) {
 
     try {
         const response = await createCharge(dueSeconds, cpf, fullname, valor, plano);
-        locId = response.loc.id
 
-        const qrCodeData = await generateQRCode(locId)
+        if (response && response.loc.id) {
+            const locId = response.loc.id;
 
-        return res.status(200).send(response, qrCodeData);
+            const qrCodeData = await generateQRCode(locId);
+
+            return res.status(200).send(qrCodeData);
+        } else {
+
+            return res.status(400).send({ error: "ID da operação não encontrado na resposta" });
+        }
+
 
     } catch (error) {
         console.error("Erro ao criar cobrança:", error);
@@ -23,7 +30,9 @@ async function paymentPix(req, res, next) {
 }
 
 
+
 module.exports = {
     paymentPix,
+    paymentPixGenerateQR
 };
 
