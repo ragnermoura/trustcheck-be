@@ -31,6 +31,10 @@ const Usuario = conn.define("tb_usuario", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  teste: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
   id_nivel: {
     type: DataTypes.INTEGER,
     allowNull: false,

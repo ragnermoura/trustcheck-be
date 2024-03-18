@@ -28,6 +28,7 @@ const autenticarUsuario = async (req, res, next) => {
           id_plano: user.id_plano,
           id_nivel: user.id_nivel,
           id_status: user.id_status,
+          periodo_teste: user.teste,
         },
         process.env.JWT_KEY,
         {

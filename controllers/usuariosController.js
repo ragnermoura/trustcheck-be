@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
-const Consulta = require("../models/tb_consulta_count");
 const User = require("../models/tb_usuarios");
 const Perfil = require("../models/tb_perfil");
 
@@ -123,7 +122,8 @@ const cadastrarUsuario = async (req, res, next) => {
       email: req.body.email,
       senha: hashedPassword,
       id_status: req.body.status,
-      id_nivel: req.body.nivel
+      id_nivel: req.body.nivel,
+      teste: 1
 
 
     });
@@ -148,32 +148,6 @@ const cadastrarUsuario = async (req, res, next) => {
   }
 };
 
-
-const cadastrarConsultas = async (req, res, next) => {
-  try {
-    const credito = await Consulta.create({
-      id_user: req.body.id_user,
-      consultas: req.body.consultas,
-
-    });
-    const response = {
-      mensagem: "Créditos cadastrados com sucesso",
-      usuarioCriado: {
-        id_user: credito.id_user,
-        consultas: credito.consultas,
-        request: {
-          tipo: "GET",
-          descricao: "Pesquisar os usuário",
-          url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
-        },
-      },
-    };
-
-    return res.status(202).send(response);
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-};
 
 const enviarBoasVindas = async (req, res) => {
   const { email, nome, id, perfil } = req.body;
@@ -326,7 +300,6 @@ module.exports = {
   getImage,
   uploadImage,
   atualizarDadosUsuario,
-  cadastrarConsultas,
   atualizarStatusUsuario,
 
   enviarBoasVindas,

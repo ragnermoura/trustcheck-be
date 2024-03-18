@@ -23,6 +23,7 @@ const rotaRecovery = require('./routes/recovery');
 const rotaStatus = require('./routes/status');
 const rotaToken = require('./routes/token');
 const rotaUsuarios = require('./routes/usuario');
+const rotaConsulta = require('./routes/consultas');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -55,6 +56,7 @@ app.use('/recovery', rotaRecovery);
 app.use('/status', rotaStatus);
 app.use('/token', rotaToken);
 app.use('/usuarios', rotaUsuarios);
+app.use('/consulta', rotaConsulta);
 
 
 app.get('/api/test', (req, res) => {
