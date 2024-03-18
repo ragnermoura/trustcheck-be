@@ -13,7 +13,6 @@ const obterConsultaPorId = async (req, res, next) => {
         return res.status(500).send({ error: error.message });
     }
 };
-
 const cadastrarConsultas = async (req, res, next) => {
     try {
         const credito = await Consulta.create({
@@ -39,7 +38,6 @@ const cadastrarConsultas = async (req, res, next) => {
         return res.status(500).send({ error: error.message });
     }
 };
-
 const atualizarConsulta = async (req, res, next) => {
     try {
       const id_user = req.body.id_user;

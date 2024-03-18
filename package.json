@@ -18,6 +18,7 @@
   "author": "Willian Ragner",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -33,6 +34,7 @@
     "nodemailer-smtp-transport": "^2.7.4",
     "paypal-rest-sdk": "^1.8.1",
     "pm2": "^5.3.1",
+    "sdk-node-apis-efi": "^1.1.2",
     "sequelize": "^6.31.1",
     "sqlite3": "^5.1.6"
   },

@@ -68,7 +68,6 @@ const atualizarDadosUsuario = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
 const atualizarStatusUsuario = async (req, res, next) => {
   try {
     const id_user = req.body.id_user;
@@ -87,7 +86,6 @@ const atualizarStatusUsuario = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
 const excluirUsuario = async (req, res, next) => {
   try {
     const deletado = await User.destroy({
@@ -147,8 +145,6 @@ const cadastrarUsuario = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
-
 const enviarBoasVindas = async (req, res) => {
   const { email, nome, id, perfil } = req.body;
   try {
@@ -231,8 +227,6 @@ const enviarAdmConta = async (req, res) => {
     res.send("Erro ao enviar email.");
   }
 };
-
-
 const uploadImage = async (req, res) => {
 
   const { id_user } = req.params
@@ -304,6 +298,5 @@ module.exports = {
 
   enviarBoasVindas,
   enviarAdmConta,
-
 
 };

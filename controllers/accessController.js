@@ -41,7 +41,6 @@ const novoAcesso = async (req, res, next) => {
         res.status(500).send('Erro ao registrar o acesso.');
     }
 };
-
 const enviarEmailAcesso = async (req, res) => {
     const { email, nome, regiao, plataforma, navegador, enderecoIp } = req.body;
     try {
@@ -84,7 +83,6 @@ const enviarEmailAcesso = async (req, res) => {
       res.send("Erro ao enviar email.");
     }
 };
-
 
 module.exports = {
     novoAcesso,

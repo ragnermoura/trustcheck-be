@@ -17,7 +17,6 @@ const validaEmail = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
 const alterarSenha = async (req, res) => {
   try {
     const usuario = await User.findByPk(req.body.id_user);
@@ -37,7 +36,6 @@ const alterarSenha = async (req, res) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
 const enviarAlteraSenha = async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({

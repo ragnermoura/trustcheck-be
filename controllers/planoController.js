@@ -25,7 +25,6 @@ const criarPlano = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
-
 const buscarTodosPlanos = async (req, res) => {
   try {
     const planos = await Plano.findAll({
@@ -39,7 +38,6 @@ const buscarTodosPlanos = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
-
 const buscarTodosItens = async (req, res) => {
   try {
     const items = await ItemPlano.findAll();
@@ -48,27 +46,20 @@ const buscarTodosItens = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
-
 const buscarPlanoPorId = async (req, res) => {
   try {
       const id_plano = req.params.id_plano;
-      const plano = await Plano.findByPk(id_plano, {
+      const planos = await Plano.findByPk(id_plano, {
           include: [{
               model: ItemPlano,
               as: 'ItensPlano',
           }]
       });
-
-      if (!plano) {
-          return res.status(404).send({ mensagem: "Plano não encontrado." });
-      }
-
-      res.send(plano);
+      res.send(planos);
   } catch (error) {
       res.status(500).send({ error: error.message });
   }
 };
-
 const atualizarPlano = async (req, res) => {
   try {
     const id_plano = req.paraid_plano;
@@ -93,7 +84,6 @@ const atualizarPlano = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
-
 const deletarPlano = async (req, res) => {
   try {
     const id_plano = req.params.id_plano;

@@ -30,7 +30,6 @@ const criarPesquisa = async (req, res) => {
     res.status(500).send('Erro interno do servidor.');
   }
 };
-
 const buscarPesquisasPorUsuario = async (req, res) => {
   try {
     const { id_user } = req.params;

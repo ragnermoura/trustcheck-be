@@ -18,7 +18,6 @@ const registrarLog = async (req, res) => {
     res.status(500).send('Erro interno do servidor.');
   }
 };
-
 const buscarLogsPorUsuario = async (req, res) => {
   try {
     const { id_user } = req.params;

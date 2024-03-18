@@ -24,6 +24,10 @@ const rotaStatus = require('./routes/status');
 const rotaToken = require('./routes/token');
 const rotaUsuarios = require('./routes/usuario');
 const rotaConsulta = require('./routes/consultas');
+const rotaVeiculo = require('./routes/consultaVeiculo');
+const rotaPessoaFisica = require('./routes/consultaPessoaFisica');
+const rotaEmpresa = require('./routes/consultaCnpj');
+const rotaPagamentoPix = require('./routes/pix');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -57,6 +61,10 @@ app.use('/status', rotaStatus);
 app.use('/token', rotaToken);
 app.use('/usuarios', rotaUsuarios);
 app.use('/consulta', rotaConsulta);
+app.use('/buscar', rotaVeiculo);
+app.use('/buscar-cpf', rotaPessoaFisica);
+app.use('/buscar-empresa', rotaEmpresa);
+app.use('/pagamento', rotaPagamentoPix);
 
 
 app.get('/api/test', (req, res) => {
