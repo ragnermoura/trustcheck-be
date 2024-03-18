@@ -17,7 +17,7 @@ async function paymentPix(req, res, next) {
 
             const qrCodeData = await generateQRCode(locId);
 
-            return res.status(200).send(qrCodeData);
+            return res.status(200).send(response);
         } else {
 
             return res.status(400).send({ error: "ID da operação não encontrado na resposta" });
