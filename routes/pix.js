@@ -1,8 +1,7 @@
 const express = require('express');
-const pixPayment = require('../services/payment/pixImediato');
+const pixPayment = require('../controllers/pixController');
 const router = express.Router();
 
-
-router.post("/pix", pixPayment.createCharge);
+router.post("/pix", pixPayment.paymentPix);
 
 module.exports = router;
