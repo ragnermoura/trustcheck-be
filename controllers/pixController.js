@@ -32,7 +32,6 @@ async function paymentPix(req, res, next) {
 
 
 module.exports = {
-    paymentPix,
-    paymentPixGenerateQR
+    paymentPix
 };
 
