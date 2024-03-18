@@ -12,12 +12,12 @@ async function paymentPix(req, res, next) {
     try {
         const response = await createCharge(dueSeconds, cpf, fullname, valor, plano);
 
-        if (response && response.loc.id) {
-            const locId = response.loc.id;
+        if (response && response.data.loc.id) {
+            const locId = response.data.loc.id;
 
             const qrCodeData = await generateQRCode(locId);
 
-            return res.status(200).send(response);
+            return res.status(200).send(qrCodeData);
         } else {
 
             return res.status(400).send({ error: "ID da operação não encontrado na resposta" });
