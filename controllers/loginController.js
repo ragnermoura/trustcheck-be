@@ -40,7 +40,8 @@ const autenticarUsuario = async (req, res, next) => {
       return res.status(200).send({
         mensagem: "Autenticado com sucesso!",
         token: token,
-        id_status: user.id_status
+        id_status: user.id_status,
+        id_nivel: user.id_nivel
 
       });
     } else {
