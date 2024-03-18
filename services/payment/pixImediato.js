@@ -29,12 +29,20 @@ async function createCharge(dueSeconds, cpf, fullname, valor, plano) {
         ],
     }
 
-   const response = await efipay.pixCreateImmediateCharge([], body);
-   return response;
-       
+    const response = await efipay.pixCreateImmediateCharge([], body);
+    return response;
 
 }
 
-module.exports = { createCharge };
+async function generateQRCode(locId) {
+    let params = {
+        id: locId
+    }
+    const response = await efipay.pixGenerateQRCode(params);
+    return response;
+
+}
+
+module.exports = { createCharge, generateQRCode };
 
 
