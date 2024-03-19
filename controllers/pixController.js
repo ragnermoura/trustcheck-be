@@ -9,6 +9,7 @@ async function paymentPix(req, res, next) {
 
     try {
         const response = await createCharge(dueSeconds, cpf, fullname, valor, plano);
+
         return res.status(200).send(response);
 
     } catch (error) {
@@ -17,13 +18,8 @@ async function paymentPix(req, res, next) {
 }
 
 async function paymentPixGenerateQRCode(req, res, next) {
+    const locId  = req.body.locId;
     try {
-        const { locId } = req.body;
-        if (!locId) {
-            return res.status(400).send({ error: "locId é obrigatório" });
-        }
-
-        // Chama a função generateQRCode passando o locId recebido
         const qrCodeData = await generateQRCode(locId);
 
         return res.status(200).send(qrCodeData);
