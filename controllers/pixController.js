@@ -9,7 +9,7 @@ async function paymentPix(req, res, next) {
 
     try {
         const response = await createCharge(dueSeconds, cpf, fullname, valor, plano);
-        return res.status(200).send(response);
+        return res.status(200).send(response.data);
 
     } catch (error) {
         console.error("Erro ao criar cobrança:", error);
