@@ -1,4 +1,4 @@
-const { createCharge, generateQRCode } = require('../services/payment/pixImediato');
+const { createCharge, generateQRCode, pixStatus } = require('../services/payment/pixImediato');
 
 async function paymentPix(req, res, next) {
     const dueSeconds = 3600;
@@ -28,8 +28,20 @@ async function paymentPixGenerateQRCode(req, res, next) {
     }
 }
 
+async function paymentPixStatus(req, res, next) {
+    const txid = req.params.txid;
+    try {
+        const qrCodeData = await pixStatus(txid);
+        return res.status(200).send(qrCodeData);
+    } catch (error) {
+        console.error("Erro ao gerar QR Code:", error);
+        return res.status(500).send({ error: "Erro ao gerar QR Code" });
+    }
+}
+
 module.exports = {
     paymentPix,
-    paymentPixGenerateQRCode
+    paymentPixGenerateQRCode,
+    paymentPixStatus
 };
 

@@ -43,6 +43,15 @@ async function generateQRCode(locId) {
 
 }
 
-module.exports = { createCharge, generateQRCode };
+async function pixStatus(txid) {
+    let params = {
+        txid: txid
+    }
+    const response = await efipay.pixDetailCharge(params);
+    return response;
+
+}
+
+module.exports = { createCharge, generateQRCode, pixStatus };
 
 
