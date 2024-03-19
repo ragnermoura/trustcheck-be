@@ -1,7 +1,5 @@
 const { createCharge, generateQRCode } = require('../services/payment/pixImediato');
 
-
-
 async function paymentPix(req, res, next) {
     const dueSeconds = 3600;
     const cpf = req.body.cpf;
@@ -12,8 +10,12 @@ async function paymentPix(req, res, next) {
     try {
         const response = await createCharge(dueSeconds, cpf, fullname, valor, plano);
 
-        if (response && response.data.loc.id) {
+        console.log(response.data.loc)
+
+        if (response !== undefined) {
             const locId = response.data.loc.id;
+
+            console.log(locId)
 
             const qrCodeData = await generateQRCode(locId);
 
