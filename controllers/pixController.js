@@ -18,18 +18,15 @@ async function paymentPix(req, res, next) {
 }
 
 async function paymentPixGenerateQRCode(req, res, next) {
-    const locId  = req.body.locId;
+    const locId = req.params.locId;
     try {
         const qrCodeData = await generateQRCode(locId);
-
         return res.status(200).send(qrCodeData);
-
     } catch (error) {
         console.error("Erro ao gerar QR Code:", error);
         return res.status(500).send({ error: "Erro ao gerar QR Code" });
     }
 }
-
 
 module.exports = {
     paymentPix,
