@@ -1,4 +1,4 @@
-const { createCharge } = require('../services/payment/pixImediato');
+const { createCharge, generateQRCode } = require('../services/payment/pixImediato');
 
 async function paymentPix(req, res, next) {
     const dueSeconds = 3600;
@@ -9,14 +9,34 @@ async function paymentPix(req, res, next) {
 
     try {
         const response = await createCharge(dueSeconds, cpf, fullname, valor, plano);
-        return res.status(200).send(response.data);
+        return res.status(200).send(response);
 
     } catch (error) {
         console.error("Erro ao criar cobrança:", error);
     }
 }
 
+async function paymentPixGenerateQRCode(req, res, next) {
+    try {
+        const { locId } = req.body;
+        if (!locId) {
+            return res.status(400).send({ error: "locId é obrigatório" });
+        }
+
+        // Chama a função generateQRCode passando o locId recebido
+        const qrCodeData = await generateQRCode(locId);
+
+        return res.status(200).send(qrCodeData);
+
+    } catch (error) {
+        console.error("Erro ao gerar QR Code:", error);
+        return res.status(500).send({ error: "Erro ao gerar QR Code" });
+    }
+}
+
+
 module.exports = {
-    paymentPix
+    paymentPix,
+    paymentPixGenerateQRCode
 };
 
