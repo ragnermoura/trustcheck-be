@@ -1,6 +1,7 @@
 const Pagamento = require('../models/tb_pagamento');
 // Importe também os modelos de Usuario e Plano, se necessário para algumas operações
 
+
 const pagamentoController = {
   // Criar um novo pagamento
   criarPagamento: async (req, res) => {
