@@ -53,7 +53,7 @@ const buscarVeiculoDados = async (placa) => {
 };
 const buscarVeiculoLeilao = async (placa) => {
     try {
-        const urlApiBrasil = process.env.URL_API_BRASIL + "/leilao";
+        const urlApiBrasil = process.env.URL_API_BRASIL + "/vehicles/leilao";
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_2;
         const deviceToken = process.env.DEVICETOKEN_API_VEICULO_LEILAO_PROD;
 
