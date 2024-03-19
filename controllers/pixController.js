@@ -1,4 +1,4 @@
-const { createCharge, generateQRCode } = require('../services/payment/pixImediato');
+const { createCharge } = require('../services/payment/pixImediato');
 
 async function paymentPix(req, res, next) {
     const dueSeconds = 3600;
@@ -9,18 +9,12 @@ async function paymentPix(req, res, next) {
 
     try {
         const response = await createCharge(dueSeconds, cpf, fullname, valor, plano);
-        
         return res.status(200).send(response);
-
-      
-
 
     } catch (error) {
         console.error("Erro ao criar cobrança:", error);
     }
 }
-
-
 
 module.exports = {
     paymentPix

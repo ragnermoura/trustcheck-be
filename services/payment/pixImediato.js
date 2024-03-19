@@ -19,8 +19,8 @@ async function createCharge(dueSeconds, cpf, fullname, valor, plano) {
         chave: '831565f1-1b5c-4df3-89c8-81d8ec778930',
         infoAdicionais: [
             {
-                nome: 'Pagamento em',
-                valor: 'Trust Intelligent System',
+                nome: 'Trust Intelligent',
+                valor: 'System',
             },
             {
                 nome: 'Compra de Pacote',
