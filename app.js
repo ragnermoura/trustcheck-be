@@ -28,6 +28,7 @@ const rotaVeiculo = require('./routes/consultaVeiculo');
 const rotaPessoaFisica = require('./routes/consultaPessoaFisica');
 const rotaEmpresa = require('./routes/consultaCnpj');
 const rotaPagamentoPix = require('./routes/pix');
+const rotaFinanceiro = require('./routes/pagamento');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -65,6 +66,7 @@ app.use('/buscar', rotaVeiculo);
 app.use('/buscar-cpf', rotaPessoaFisica);
 app.use('/buscar-empresa', rotaEmpresa);
 app.use('/pagamento', rotaPagamentoPix);
+app.use('/financeiro', rotaFinanceiro);
 
 
 app.get('/api/test', (req, res) => {
