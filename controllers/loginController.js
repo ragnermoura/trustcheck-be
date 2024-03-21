@@ -2,6 +2,8 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const  Usuario  = require("../models/tb_usuarios");
+const Logado = require("../models/tb_logout");
+const {registrarLog} = require("./logsController");
 
 const autenticarUsuario = async (req, res, next) => {
   try {
@@ -37,6 +39,13 @@ const autenticarUsuario = async (req, res, next) => {
         }
       );
 
+      await Logado.create({
+        id_user: user.id_user,
+        status: 1,
+      });
+
+      //await registrarLog('Usuário logado', user.id_user);
+
       return res.status(200).send({
         mensagem: "Autenticado com sucesso!",
         token: token,
@@ -52,7 +61,31 @@ const autenticarUsuario = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
+const logoutUsuario = async (req, res) => {
+  try {
+    const { id_user } = req.params;
+    const novoStatus = 0;
+
+    const resultado = await Logado.update(
+      { status: novoStatus },
+      { where: { id_user: id_user } }
+    );
+
+    await registrarLog('Usuário deslogado', id_user);
+
+    if (resultado[0] > 0) {
+      return res.status(200).send({ mensagem: "Logout realizado com sucesso." });
+    } else {
+      return res.status(404).send({ mensagem: "Registro de login não encontrado para atualização." });
+    }
+  } catch (error) {
+    console.error("Erro ao realizar logout:", error);
+    return res.status(500).send({ error: error.message });
+  }
+};
+
 
 module.exports = {
   autenticarUsuario,
+  logoutUsuario
 };

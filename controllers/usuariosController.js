@@ -2,8 +2,13 @@ const bcrypt = require("bcrypt");
 const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
+const { v4: uuidv4 } = require('uuid');
 const User = require("../models/tb_usuarios");
 const Perfil = require("../models/tb_perfil");
+const Token = require("../models/tb_token");
+const Plano = require("../models/tb_plano");
+const ConsultaCount = require("../models/tb_consulta_count");
+
 
 require('dotenv').config();
 
@@ -57,12 +62,30 @@ const atualizarDadosUsuario = async (req, res, next) => {
 
     const [updated] = await User.update({ id_plano: plano }, { where: { id_user: id_user } });
 
+    const planoEscolhido = await Plano.findByPk(plano);
+    if (!planoEscolhido) {
+      return res.status(404).send({ message: "Plano não encontrado" });
+    }
+
+    const consultaExistente = await ConsultaCount.findOne({ where: { id_user: id_user } });
+
+    if (consultaExistente) {
+      await consultaExistente.update({ consultas: planoEscolhido.qtd_pesquisas.toString() });
+    } else {
+
+      await ConsultaCount.create({
+        id_user: id_user,
+        consultas: planoEscolhido.qtd_pesquisas
+      });
+    }
+
     if (updated) {
       console.log(`Usuário atualizado com sucesso: ${id_user}`);
       return res.status(201).send({ mensagem: "Dados de usuário alterados com sucesso!" });
     } else {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
+
   } catch (error) {
     console.error("Erro na atualização do usuário:", error);
     return res.status(500).send({ error: error.message });
@@ -121,17 +144,26 @@ const cadastrarUsuario = async (req, res, next) => {
       senha: hashedPassword,
       id_status: req.body.status,
       id_nivel: req.body.nivel,
-      teste: 1
-
-
+      teste: req.body.teste,
     });
+
+    const tokenUsuario = await Token.create({
+      id_user: novoUsuario.id_user,
+      token: uuidv4(),
+    });
+
+
+    //await registrarLog('Usuário criado com sucesso', novoUsuario.id_user);
+
+
     const response = {
-      mensagem: "Usuário cadastrado com sucesso",
+      mensagem: "Usuário cadastrado com sucesso e Token unico gerado!",
       usuarioCriado: {
         id_user: novoUsuario.id_user,
         nome: novoUsuario.nome,
         email: novoUsuario.email,
         nivel: novoUsuario.id_nivel,
+        token_unico: tokenUsuario.token,
         request: {
           tipo: "GET",
           descricao: "Pesquisar um usuário",
@@ -295,7 +327,6 @@ module.exports = {
   uploadImage,
   atualizarDadosUsuario,
   atualizarStatusUsuario,
-
   enviarBoasVindas,
   enviarAdmConta,
 

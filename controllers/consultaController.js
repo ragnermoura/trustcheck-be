@@ -4,11 +4,13 @@ const Consulta = require("../models/tb_consulta_count");
 
 const obterConsultaPorId = async (req, res, next) => {
     try {
-        const consulta = await Consulta.findByPk(req.params.id_user);
+        const consulta = await Consulta.findOne({
+            where: { id_user: req.params.id_user }
+        });
         if (!consulta) {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }
-        return res.status(200).send({ response: consulta });
+        return res.status(200).send(consulta);
     } catch (error) {
         return res.status(500).send({ error: error.message });
     }

@@ -11,11 +11,11 @@ const Perfil = conn.define("tb_perfil", {
     },
     razao_social: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     cnpj: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     cpf: {
@@ -41,7 +41,7 @@ const Perfil = conn.define("tb_perfil", {
     },
     endereco: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     pdf_rg: {
         type: DataTypes.STRING,

@@ -5,14 +5,16 @@ const {
 } = require('../services/pessoafisica/index');
 
 
-router.post('/pessoa-fisica', async (req, res) => {
+router.post("/pessoa-fisica", async (req, res) => {
+  const { id_user, token, cpf } = req.body;
   try {
-    const cpf = req.body.cpf;
-    const resultado = await buscarPessoaFisica(cpf);
-    res.json(resultado);
+      const data = await buscarPessoaFisica(id_user, token, cpf);
+      res.json(data);
   } catch (error) {
-    res.status(500).send({ message: error.message });
+      console.error('Erro na rota de buscar pessoa física:', error);
+      res.status(500).send({ error: error.message });
   }
 });
+
 
 module.exports = router;

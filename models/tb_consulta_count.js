@@ -14,7 +14,7 @@ const ConsultaCount = conn.define("tb_consulta_count", {
         allowNull: false,
     },
     consultas: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
  

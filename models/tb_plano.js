@@ -24,6 +24,14 @@ const Plano = conn.define("tb_plano", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    qtd_pesquisas: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            isInt: true,
+            min: 0,
+          }
+    },
     valor_plano_mes: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -6,7 +6,6 @@ const registrarLog = async (req, res) => {
   try {
     const { atividade, id_user } = req.body;
 
-    // Criando um novo log
     const novoLog = await Logs.create({
       atividade,
       id_user

@@ -14,6 +14,7 @@ const Usuarios = require('./models/tb_usuarios');
 
 const rotaAcesso = require('./routes/access');
 const rotaLog = require('./routes/log');
+const rotaLogconsulta = require('./routes/logconsulta');
 const rotaLogin = require('./routes/login');
 const rotaNivel = require('./routes/nivel');
 const rotaPerfil = require('./routes/perfil');
@@ -52,7 +53,8 @@ app.use((req, res, next) => {
 
 app.use('/acesso', rotaAcesso);
 app.use('/log', rotaLog);
-app.use('/login', rotaLogin);
+app.use('/logconsulta', rotaLogconsulta);
+app.use('/auth', rotaLogin);
 app.use('/nivel', rotaNivel);
 app.use('/perfil', rotaPerfil);
 app.use('/pesquisar', rotaPesquisar);
@@ -100,7 +102,6 @@ ItemPlano.belongsTo(Plano, {
     foreignKey: 'id_plano',
     as: 'Plano'
 });
-
 
 Usuarios.hasMany(Perfil, {
     foreignKey: 'id_user',

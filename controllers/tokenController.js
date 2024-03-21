@@ -20,8 +20,8 @@ const buscarTodosTokens = async (req, res) => {
 };
 const buscarTokenPorId = async (req, res) => {
   try {
-    const id = req.params.id;
-    const token = await Token.findByPk(id);
+    const id_user = req.params.id_user;
+    const token = await Token.findByPk(id_user);
     if (!token) {
       return res.status(404).send({ mensagem: "Token não encontrado." });
     }

@@ -1,7 +1,6 @@
 
 const Perfil = require("../models/tb_perfil");
 const Usuario = require("../models/tb_acesso");
-
 const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
@@ -92,6 +91,7 @@ const cadastrarPerfil = async (req, res, next) => {
             id_user: req.body.id_user,
         });
 
+    
         const response = {
             mensagem: "Perfil do usuário cadastrado com sucesso",
             perfilCriado: {

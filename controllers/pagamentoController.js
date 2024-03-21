@@ -8,6 +8,7 @@ const pagamentoController = {
     try {
       const { id_user, id_plano, valor, metodo, status } = req.body;
       const novoPagamento = await Pagamento.create({ id_user, id_plano, valor, metodo, status });
+     
       return res.status(201).send(novoPagamento);
     } catch (error) {
       return res.status(500).send({ message: error.message });
@@ -41,9 +42,9 @@ const pagamentoController = {
   // Atualizar um pagamento
   atualizarPagamento: async (req, res) => {
     try {
-      const { id } = req.params;
+      const { id_pagamento } = req.params;
       const { id_user, id_plano, valor, metodo, status } = req.body;
-      const pagamento = await Pagamento.findByPk(id);
+      const pagamento = await Pagamento.findByPk(id_pagamento);
       if (!pagamento) {
         return res.status(404).send({ message: 'Pagamento não encontrado.' });
       }
@@ -53,6 +54,14 @@ const pagamentoController = {
       pagamento.metodo = metodo;
       pagamento.status = status;
       await pagamento.save();
+
+      if(status === 1){
+        await registrarLog('Pagamento recebido com sucesso.', id_user);
+      }else if(status === 2){
+        await registrarLog('Pagamento não recebido.', id_user);
+      }
+
+      
       return res.status(200).send(pagamento);
     } catch (error) {
       return res.status(500).send({ message: error.message });

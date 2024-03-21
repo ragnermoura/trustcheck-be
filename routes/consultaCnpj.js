@@ -13,8 +13,8 @@ const {
 
 router.post('/cnpj', async (req, res) => {
     try {
-        const { cnpj } = req.body;
-        const resultado = await buscarCnpj(cnpj);
+        const { id_user, token, cnpj } = req.body;
+        const resultado = await buscarCnpj(id_user, token, cnpj);
         res.json(resultado);
     } catch (error) {
         res.status(500).send({ message: error.message });
@@ -22,9 +22,10 @@ router.post('/cnpj', async (req, res) => {
 });
 
 router.post('/cnae', async (req, res) => {
+  
     try {
-        const dados = req.body;
-        const resultado = await buscarCnae(dados);
+        const { id_user, token, dados } = req.body;
+        const resultado = await buscarCnae( id_user, token, dados);
         res.json(resultado);
     } catch (error) {
         res.status(500).send({ message: error.message });
