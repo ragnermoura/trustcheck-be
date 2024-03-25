@@ -147,7 +147,7 @@ const buscarVeiculoBinBaseEstadual = async (id_user, token, placa, uf) => {
         await consultaCount.decrement('consultas');
 
         // Realizar a consulta à API externa
-        const urlApiBrasil = process.env.URL_API_BRASIL + "/binBaseEstadual";
+        const urlApiBrasil = process.env.URL_API_BRASIL + "/vehicles/binBaseEstadual";
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_2;
         const deviceToken = process.env.DEVICETOKEN_API_VEICULO_BIN_BASE_HOMOLOG;
 
