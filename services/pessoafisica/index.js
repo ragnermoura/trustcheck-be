@@ -28,7 +28,7 @@ const buscarPessoaFisica = async (id_user, token, cpf) => {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${process.env.TOKEN_API_BRASIL_PROFILE_1}`,
-                    DeviceToken: process.env.DEVICETOKEN_API_CPF_HOMOLOG,
+                    DeviceToken: process.env.DEVICETOKEN_API_CPF_PROD,
                     Accept: "application/json",
                     "Access-Control-Allow-Headers": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET",

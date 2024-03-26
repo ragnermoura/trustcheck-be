@@ -24,7 +24,7 @@ const buscarCnpj = async (id_user, token, cnpj) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
 
         const response = await axios.post(`${urlApiBrasil}/cnpj`, { cnpj }, {
             headers: {
@@ -67,7 +67,7 @@ const buscarCnae = async (id_user, token, dados) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
 
         const response = await axios.post(`${urlApiBrasil}/cnae`, {
             cnae: dados.cnae,
@@ -131,7 +131,7 @@ const buscarDataAbertura = async (id_user, token, dados) => {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${process.env.TOKEN_API_BRASIL_PROFILE_1}`,
-                DeviceToken: process.env.DEVICETOKEN_API_CNPJ_HOMOLOG,
+                DeviceToken: DEVICETOKEN_API_CNPJ_PROD,
                 Accept: "application/json",
             }
         });
@@ -178,7 +178,7 @@ const buscarCapitalSocial = async (id_user, token, dados) => {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${process.env.TOKEN_API_BRASIL_PROFILE_1}`,
-                DeviceToken: process.env.DEVICETOKEN_API_CNPJ_HOMOLOG,
+                DeviceToken: DEVICETOKEN_API_CNPJ_PROD,
                 Accept: "application/json",
             },
         });
@@ -222,7 +222,7 @@ const buscarListaSocios = async (id_user, token, dados) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
 
         const response = await axios.post(`${urlApiBrasil}/lista-socios`, {
             quantidade: dados.quantidade,
