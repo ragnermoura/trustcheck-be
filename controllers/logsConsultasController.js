@@ -38,7 +38,17 @@ const listarConsultasPorUsuario = async (req, res) => {
     }
 };
 
+const listarConsultas = async (req, res) => {
+    try {
+        const consultas = await Logsconsultas.findAll();
+        return res.status(200).send({ response: consultas });
+      } catch (error) {
+        return res.status(500).send({ error: error.message });
+      }
+};
+
 module.exports = {
     registrarConsulta,
     listarConsultasPorUsuario,
+    listarConsultas
 };
