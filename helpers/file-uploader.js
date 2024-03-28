@@ -41,4 +41,4 @@ const uploadFields = multer({
 ]);
 
 
-module.exports = { uploadFields, uploadArray };
+module.exports = { uploadFields };

@@ -29,7 +29,7 @@ const Documento = conn.define(
     { freezeTableName: true }
 );
 
-Logs.belongsTo(Usuario, {
+Documento.belongsTo(Usuario, {
     foreignKey: "id_user",
     foreignKeyConstraint: true,
 });
