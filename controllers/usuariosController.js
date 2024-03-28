@@ -8,7 +8,8 @@ const Perfil = require("../models/tb_perfil");
 const Token = require("../models/tb_token");
 const Plano = require("../models/tb_plano");
 const ConsultaCount = require("../models/tb_consulta_count");
-
+const Log = require("../models/tb_logs");
+const SendDoc = require("../models/tb_documentos");
 
 require('dotenv').config();
 
@@ -135,7 +136,24 @@ const cadastrarUsuario = async (req, res, next) => {
           mensagem: "Email já cadastrado, por favor insira um email diferente!",
         });
     }
+
+
+    const perfilExistente = await Perfil.findOne({
+      where: { cnpj: req.body.cnpj },
+    });
+    if (perfilExistente) {
+      return res
+        .status(410)
+        .send({
+          mensagem: "Cnpj já cadastrado, por favor insira um CNPJ diferente!",
+        });
+    }
+
     const hashedPassword = await bcrypt.hash(req.body.senha, 10);
+    const htmlFilePath = path.join(__dirname, '../template/welcome/index.html');
+    let htmlContent = await fs.readFile(htmlFilePath, "utf8");
+
+    const filename = req.file ? req.file.filename : "default-avatar.png";
 
     const novoUsuario = await User.create({
       nome: req.body.nome,
@@ -145,6 +163,8 @@ const cadastrarUsuario = async (req, res, next) => {
       id_status: req.body.status,
       id_nivel: req.body.nivel,
       teste: req.body.teste,
+      qrcode: qrCodeURL,
+      avatar: `/avatar/${filename}`,
     });
 
     const tokenUsuario = await Token.create({
@@ -152,42 +172,36 @@ const cadastrarUsuario = async (req, res, next) => {
       token: uuidv4(),
     });
 
+    const novoperfil = await Perfil.create({
+      razao_social: req.body.razao_social,
+      cnpj: req.body.cnpj,
+      cpf: req.body.cpf,
+      telefone: req.body.telefone,
+      telefone2: req.body.telefone2,
+      aniversario: req.body.aniversario,
+      cep: req.body.cep,
+      endereco: req.body.endereco,
+      tem_cnpj: req.body.tem_cnpj,
+      termos: req.body.termos,
+      id_user: novoUsuario.id_user,
+    });
 
-    //await registrarLog('Usuário criado com sucesso', novoUsuario.id_user);
+    const logAtividade = await Log.create({
+      atividade: 'Status: 202 - Usuário cadastrado com sucesso',
+      id_user: novoUsuario.id_user,
+    });
 
+    const qrData = `Nome: ${novoUsuario.nome}, Sobrenome: ${novoUsuario.sobrenome}, Email: ${novoUsuario.email}, Id: ${novoUsuario.id_user}, Token: ${tokenUsuario.token}`;
+    const qrCodeURL = await QRCode.toDataURL(qrData);
 
-    const response = {
-      mensagem: "Usuário cadastrado com sucesso e Token unico gerado!",
-      usuarioCriado: {
-        id_user: novoUsuario.id_user,
-        nome: novoUsuario.nome,
-        email: novoUsuario.email,
-        nivel: novoUsuario.id_nivel,
-        token_unico: tokenUsuario.token,
-        request: {
-          tipo: "GET",
-          descricao: "Pesquisar um usuário",
-          url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
-        },
-      },
-    };
+    htmlContent = htmlContent.replace('{{qrCodeURL}}', qrCodeURL);
 
-    return res.status(202).send(response);
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-};
-const enviarBoasVindas = async (req, res) => {
-  const { email, nome, id, perfil } = req.body;
-  try {
-    const htmlFilePath = path.join(__dirname, '../template/welcome/index.html');
-    let htmlContent = await fs.readFile(htmlFilePath, "utf8");
 
     htmlContent = htmlContent
-      .replace("{{nome}}", nome)
-      .replace("{{emailclient}}", email)
-      .replace("{{id}}", id)
-      .replace("{{perfil}}", perfil)
+      .replace("{{nome}}", novoUsuario.nome)
+      .replace("{{emailclient}}", novoUsuario.email)
+      .replace("{{id}}", novoUsuario.id_user)
+      .replace("{{perfil}}", novoperfil.id_perfil)
 
     let transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
@@ -212,122 +226,105 @@ const enviarBoasVindas = async (req, res) => {
 
     let info = await transporter.sendMail(mailOptions);
     console.log("Mensagem enviada: %s", info.messageId);
-    res.send("Email enviado com sucesso!");
-  } catch (error) {
-    console.error("Erro ao enviar email: ", error);
-    res.send("Erro ao enviar email.");
-  }
-};
-const enviarAdmConta = async (req, res) => {
-  const { email, nomecliente } = req.body;
-  const nome = 'Humberto'
-  try {
-    const htmlFilePath = path.join(__dirname, '../template/alerts/conta.html');
-    let htmlContent = await fs.readFile(htmlFilePath, "utf8");
 
-    htmlContent = htmlContent
-      .replace("{{nome}}", nome)
-      .replace("{{emailclient}}", email)
-      .replace("{{nomeclient}}", nomecliente)
-
-    let transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+    const response = {
+      mensagem: "Usuário cadastrado com sucesso e Token unico gerado!",
+      usuarioCriado: {
+        id_user: novoUsuario.id_user,
+        nome: novoUsuario.nome,
+        email: novoUsuario.email,
+        nivel: novoUsuario.id_nivel,
+        token_unico: tokenUsuario.token,
+        id_perfil: novoperfil.id_perfil,
+        log: logAtividade.id_log,
+        qrCodeURL,
+        request: {
+          tipo: "GET",
+          descricao: "Pesquisar um usuário",
+          url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
+        },
       },
-      tls: {
-        ciphers: "TLSv1",
-      },
-    });
-
-
-    let mailOptions = {
-      from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
-      to: 'humberto@trustsystemalert.com.br, ragnermoura@gmail.com',
-      subject: "✅ Nova conta criada",
-      html: htmlContent,
     };
 
-    let info = await transporter.sendMail(mailOptions);
-    console.log("Mensagem enviada: %s", info.messageId);
-    res.send("Email enviado com sucesso!");
+    return res.status(202).send(response);
   } catch (error) {
-    console.error("Erro ao enviar email: ", error);
-    res.send("Erro ao enviar email.");
+    return res.status(500).send({ error: error.message });
   }
 };
-const uploadImage = async (req, res) => {
-
-  const { id_user } = req.params
-
-  const { filename } = req.file
-
-  const update = {
-    avatar: `/avatar/${filename}`
-  }
-
+const envioDocumentos = async (req, res, next) => {
   try {
+    if (req.files && req.files.length > 0) {
+      const documentos = await Promise.all(req.files.map(file => {
+        return SendDoc.create({
+          rg: `/documento/rg/${file.filename}`,
+          cnpj: `/documento/cnpj/${file.filename}`,
+          id_user: req.body.id_user,
+        });
+      }));
 
-    await User.update(update, {
-      where: {
-        id_user
+      const usuario = await User.findByPk(req.body.id_user);
+      if (!usuario) {
+        return res.status(404).send({ message: "Usuário não encontrado para envio de email." });
       }
+
+      const nome = usuario.nome;
+      const email = usuario.email;
+
+      const htmlFilePath = path.join(__dirname, '../template/alerts/conta.html');
+      let htmlContent = await fs.readFile(htmlFilePath, "utf8");
+
+      htmlContent = htmlContent
+        .replace("{{nome}}", nome)
+        .replace("{{emailclient}}", email)
+        .replace("{{nomeclient}}", nome);
+
+      let transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: true,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+          ciphers: "TLSv1",
+        },
+      });
+
+      let mailOptions = {
+        from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
+        to: 'humberto@trustsystemalert.com.br, ragnermoura@gmail.com',
+        subject: "✅ Nova conta criada",
+        html: htmlContent,
+      };
+
+      await transporter.sendMail(mailOptions);
+      console.log("Email enviado com sucesso para:", email);
+
+      const response = {
+        mensagem: "Documento(s) cadastrado(s) com sucesso e email enviado!",
+        documentosCadastrados: documentos,
+      };
+
+      return res.status(201).send(response);
+    } else {
+
+      return res.status(400).send({ mensagem: "Nenhum documento enviado." });
     }
-    )
-
-    return res.status(201).json({
-      success: true,
-      mensagem: 'Imagem cadastrada com sucesso!',
-    });
-
   } catch (error) {
-    console.log(error)
-    res.status(500).json({
-      success: false,
-      message: 'Ocorreu um erro'
-    })
+    console.error("Erro ao criar documentos ou enviar email: ", error);
+    return res.status(500).send({ mensagem: "Erro ao criar documento ou enviar email", error: error.message });
   }
-}
-const getImage = async (req, res) => {
+};
 
-  try {
-
-    const { id_user } = req.params
-
-    const image = await User.findOne({
-      where: { id_user },
-      attributes: ['avatar']
-    })
-
-    res.status(200).json({
-      success: true,
-      message: 'Sucesso',
-      image
-    })
-
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({
-      success: false,
-      message: 'Ocorreu um erro'
-    })
-  }
-
-}
 module.exports = {
   obterUsuarios,
   obterUsuarioPorId,
   atualizarUsuario,
   excluirUsuario,
   cadastrarUsuario,
-  getImage,
-  uploadImage,
   atualizarDadosUsuario,
   atualizarStatusUsuario,
-  enviarBoasVindas,
-  enviarAdmConta,
+  envioDocumentos,
 
 };

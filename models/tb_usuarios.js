@@ -35,6 +35,10 @@ const Usuario = conn.define("tb_usuario", {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  qrcode: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   id_nivel: {
     type: DataTypes.INTEGER,
     allowNull: false,

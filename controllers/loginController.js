@@ -84,7 +84,6 @@ const logoutUsuario = async (req, res) => {
   }
 };
 
-
 module.exports = {
   autenticarUsuario,
   logoutUsuario

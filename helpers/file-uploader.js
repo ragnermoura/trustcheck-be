@@ -1,19 +1,19 @@
 const multer = require("multer");
 const path = require("path");
 
-const imageStorage = multer.diskStorage({
+// Configuração padrão de armazenamento
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    let folder = "avatar";
-
-    if (req.baseUrl.includes('logo')) {
+    let folder = "";
+    if (file.fieldname === "logo") {
       folder = "logo";
-    } else if (req.baseUrl.includes('user')) {
+    } else if (file.fieldname === "rg") {
+      folder = "documentos/rg";
+    } else if (file.fieldname === "cnpj") {
+      folder = "documentos/cnpj";
+    } else {
       folder = "avatar";
-    }else if (req.baseUrl.includes('perfil')) {
-      folder = "documentos";
     }
-    
-
     cb(null, `public/${folder}/`);
   },
   filename: (req, file, cb) => {
@@ -21,15 +21,24 @@ const imageStorage = multer.diskStorage({
   },
 });
 
-const imageUpload = multer({
-  storage: imageStorage,
-  fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(png|jpg|pdf|jpeg|pdf)$/)) {
-      // upload only png and jpg format
-      return cb(new Error("Por favor, envie apenas png, jpg ou Pdf!"));
-    }
-    cb(undefined, true);
-  },
-});
+// Configuração de filtragem de arquivos
+const fileFilter = (req, file, cb) => {
+  if (!file.originalname.match(/\.(png|jpg|jpeg|pdf)$/)) {
+    return cb(new Error("Por favor, envie apenas png, jpg ou jpeg!"));
+  }
+  cb(undefined, true);
+};
 
-module.exports = { imageUpload };
+// Instância do Multer para campos específicos
+const uploadFields = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+}).fields([
+  { name: "avatar", maxCount: 1 },
+  { name: "logo", maxCount: 1 },
+  { name: "documentos/rg", maxCount: 1 },
+  { name: "documentos/cnpj", maxCount: 1 },
+]);
+
+
+module.exports = { uploadFields, uploadArray };

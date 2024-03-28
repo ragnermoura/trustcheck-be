@@ -95,7 +95,7 @@ const buscarCnae = async (id_user, token, dados) => {
         throw error;
     }
 };
-const buscarUf = async (dados) => {
+const buscarUf = async (id_user, token, dados) => {
     const response = await axios.post(`${urlApiBrasil}/uf`, {
         uf: dados.uf,
         quantidade: dados.quantidade,
@@ -195,7 +195,7 @@ const buscarCapitalSocial = async (id_user, token, dados) => {
         throw error;
     }
 };
-const buscarCep = async (dados) => {
+const buscarCep = async (id_user, token, dados) => {
     const response = await axios.post(`${urlApiBrasil}/cep`, {
         cep: dados.cep,
         quantidade: dados.quantidade,

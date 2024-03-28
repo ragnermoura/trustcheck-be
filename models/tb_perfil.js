@@ -43,14 +43,6 @@ const Perfil = conn.define("tb_perfil", {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    pdf_rg: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    pdf_cnpj: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     tem_cnpj: {
         type: DataTypes.STRING,
         allowNull: false,

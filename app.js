@@ -17,7 +17,6 @@ const rotaLog = require('./routes/log');
 const rotaLogconsulta = require('./routes/logconsulta');
 const rotaLogin = require('./routes/login');
 const rotaNivel = require('./routes/nivel');
-const rotaPerfil = require('./routes/perfil');
 const rotaPesquisar = require('./routes/pesquisar');
 const rotaPlano = require('./routes/plano');
 const rotaRecovery = require('./routes/recovery');
@@ -30,6 +29,7 @@ const rotaPessoaFisica = require('./routes/consultaPessoaFisica');
 const rotaEmpresa = require('./routes/consultaCnpj');
 const rotaPagamentoPix = require('./routes/pix');
 const rotaFinanceiro = require('./routes/pagamento');
+const rotaTicket = require('./routes/ticket');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -56,7 +56,6 @@ app.use('/log', rotaLog);
 app.use('/logconsulta', rotaLogconsulta);
 app.use('/auth', rotaLogin);
 app.use('/nivel', rotaNivel);
-app.use('/perfil', rotaPerfil);
 app.use('/pesquisar', rotaPesquisar);
 app.use('/plano', rotaPlano);
 app.use('/recovery', rotaRecovery);
@@ -69,6 +68,7 @@ app.use('/buscar-cpf', rotaPessoaFisica);
 app.use('/buscar-empresa', rotaEmpresa);
 app.use('/pagamento', rotaPagamentoPix);
 app.use('/financeiro', rotaFinanceiro);
+app.use('/ticket', rotaTicket);
 
 
 app.get('/api/test', (req, res) => {

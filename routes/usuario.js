@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/usuariosController");
-const { imageUpload } = require("../helpers/file-uploader");
+const { uploadFields } = require("../helpers/file-uploader");
 
 
 router.get("/", userController.obterUsuarios);
@@ -11,14 +11,11 @@ router.patch("/plano", userController.atualizarDadosUsuario);
 router.patch("/status", userController.atualizarStatusUsuario);
 
 router.delete("/delete/:id_user", userController.excluirUsuario);
-router.post("/cadastro", userController.cadastrarUsuario);
+router.post("/cadastro", uploadFields, userController.cadastrarUsuario);
+router.post("/documentos/:id_user", uploadFields, userController.cadastrarUsuario);
 
 
-router.patch("/upload-user-image/:id_user", imageUpload.single('avatar'), userController.uploadImage);
-router.get("/getImage/:id_user", userController.getImage);
 
-router.post("/enviar-boas-vindas", userController.enviarBoasVindas);
-router.post("/aviso-admin", userController.enviarAdmConta);
 
 
 module.exports = router;
