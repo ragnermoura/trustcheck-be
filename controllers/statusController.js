@@ -2,12 +2,19 @@ const Status = require('../models/tb_status');
 
 const criarStatus = async (req, res, next) => {
   try {
-    const novoStatus = await Status.create(req.body);
-    return res.status(201).send({ response: novoStatus });
+    if (Array.isArray(req.body)) {
+      const novosStatus = await Status.bulkCreate(req.body);
+      return res.status(201).send({ response: novosStatus });
+    } else {
+      const novoStatus = await Status.create(req.body);
+      return res.status(201).send({ response: novoStatus });
+    }
   } catch (error) {
+    console.error("Erro ao criar status: ", error);
     return res.status(500).send({ error: error.message });
   }
 };
+
 const obterStatus = async (req, res, next) => {
   try {
     const status = await Status.findAll();

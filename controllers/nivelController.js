@@ -24,12 +24,22 @@ const obterNivelPorId = async (req, res, next) => {
 };
 const criarNivel = async (req, res, next) => {
   try {
-    const novoNivel = await Nivel.create(req.body);
-    return res.status(201).send({ response: novoNivel });
+   
+    if (Array.isArray(req.body)) {
+      
+      const novosNiveis = await Nivel.bulkCreate(req.body);
+      return res.status(201).send({ response: novosNiveis });
+    } else {
+    
+      const novoNivel = await Nivel.create(req.body);
+      return res.status(201).send({ response: novoNivel });
+    }
   } catch (error) {
+    console.error("Erro ao criar nível: ", error);
     return res.status(500).send({ error: error.message });
   }
 };
+
 const atualizarNivel = async (req, res, next) => {
   try {
     const nivelAtualizado = await Nivel.update(req.body, {

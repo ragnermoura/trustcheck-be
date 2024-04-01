@@ -30,6 +30,7 @@ const rotaEmpresa = require('./routes/consultaCnpj');
 const rotaPagamentoPix = require('./routes/pix');
 const rotaFinanceiro = require('./routes/pagamento');
 const rotaTicket = require('./routes/ticket');
+const rotaTermos = require('./routes/termos');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -69,6 +70,7 @@ app.use('/buscar-empresa', rotaEmpresa);
 app.use('/pagamento', rotaPagamentoPix);
 app.use('/financeiro', rotaFinanceiro);
 app.use('/ticket', rotaTicket);
+app.use('/termos', rotaTermos);
 
 
 app.get('/api/test', (req, res) => {

@@ -3,6 +3,7 @@ const router = express.Router();
 const {
     buscarCnpj,
     buscarCnae,
+    buscarCnaeDetalhes,
     buscarUf,
     buscarDataAbertura,
     buscarCapitalSocial,
@@ -26,6 +27,17 @@ router.post('/cnae', async (req, res) => {
     try {
         const { id_user, token, dados } = req.body;
         const resultado = await buscarCnae( id_user, token, dados);
+        res.json(resultado);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+});
+
+router.post('/detalhes/cnae', async (req, res) => {
+  
+    try {
+        const { id_user, token, cnae, quantidade, uf, municipio } = req.body;
+        const resultado = await buscarCnaeDetalhes( id_user, token, cnae, quantidade, uf, municipio);
         res.json(resultado);
     } catch (error) {
         res.status(500).send({ message: error.message });

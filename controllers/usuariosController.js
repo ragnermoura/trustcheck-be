@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require("fs").promises;
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require('uuid');
+const QRCode = require('qrcode');
 const User = require("../models/tb_usuarios");
 const Perfil = require("../models/tb_perfil");
 const Token = require("../models/tb_token");
@@ -10,6 +11,7 @@ const Plano = require("../models/tb_plano");
 const ConsultaCount = require("../models/tb_consulta_count");
 const Log = require("../models/tb_logs");
 const SendDoc = require("../models/tb_documentos");
+const Qrcode = require("../models/tb_qrcode");
 
 require('dotenv').config();
 
@@ -148,12 +150,12 @@ const cadastrarUsuario = async (req, res, next) => {
           mensagem: "Cnpj já cadastrado, por favor insira um CNPJ diferente!",
         });
     }
-
     const hashedPassword = await bcrypt.hash(req.body.senha, 10);
     const htmlFilePath = path.join(__dirname, '../template/welcome/index.html');
     let htmlContent = await fs.readFile(htmlFilePath, "utf8");
-
     const filename = req.file ? req.file.filename : "default-avatar.png";
+    const qrData = `Nome: ${req.body.nome}, Sobrenome: ${req.body.sobrenome}, Email: ${req.body.email},  Avatar: ${filename}`;
+    const qrCodeURL = await QRCode.toDataURL(qrData);
 
     const novoUsuario = await User.create({
       nome: req.body.nome,
@@ -163,15 +165,12 @@ const cadastrarUsuario = async (req, res, next) => {
       id_status: req.body.status,
       id_nivel: req.body.nivel,
       teste: req.body.teste,
-      qrcode: qrCodeURL,
       avatar: `/avatar/${filename}`,
     });
-
     const tokenUsuario = await Token.create({
       id_user: novoUsuario.id_user,
       token: uuidv4(),
     });
-
     const novoperfil = await Perfil.create({
       razao_social: req.body.razao_social,
       cnpj: req.body.cnpj,
@@ -185,17 +184,15 @@ const cadastrarUsuario = async (req, res, next) => {
       termos: req.body.termos,
       id_user: novoUsuario.id_user,
     });
-
     const logAtividade = await Log.create({
-      atividade: 'Status: 202 - Usuário cadastrado com sucesso',
+      atividade: '✅ Status: 202 - Usuário cadastrado com sucesso',
       id_user: novoUsuario.id_user,
     });
-
-    const qrData = `Nome: ${novoUsuario.nome}, Sobrenome: ${novoUsuario.sobrenome}, Email: ${novoUsuario.email}, Id: ${novoUsuario.id_user}, Token: ${tokenUsuario.token}`;
-    const qrCodeURL = await QRCode.toDataURL(qrData);
-
-    htmlContent = htmlContent.replace('{{qrCodeURL}}', qrCodeURL);
-
+    const novoQrcode = await Qrcode.create({
+      qrcode: qrCodeURL,
+      id_user: novoUsuario.id_user
+     ,
+    });
 
     htmlContent = htmlContent
       .replace("{{nome}}", novoUsuario.nome)
@@ -206,7 +203,7 @@ const cadastrarUsuario = async (req, res, next) => {
     let transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
-      secure: true, // true para porta 465, false para outras portas
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -219,7 +216,7 @@ const cadastrarUsuario = async (req, res, next) => {
 
     let mailOptions = {
       from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
-      to: email,
+      to: novoUsuario.email,
       subject: "✅ Conta criada com sucesso!",
       html: htmlContent,
     };
@@ -237,11 +234,11 @@ const cadastrarUsuario = async (req, res, next) => {
         token_unico: tokenUsuario.token,
         id_perfil: novoperfil.id_perfil,
         log: logAtividade.id_log,
-        qrCodeURL,
+        qrcode: novoQrcode.qrcode,
         request: {
           tipo: "GET",
           descricao: "Pesquisar um usuário",
-          url: `https://trustchecker.com.br/api//usuarios/${novoUsuario.id_user}`,
+          url: `https://trustchecker.com.br/api/usuarios/${novoUsuario.id_user}`,
         },
       },
     };

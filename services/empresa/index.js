@@ -24,9 +24,9 @@ const buscarCnpj = async (id_user, token, cnpj) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
 
-        const response = await axios.post(`${urlApiBrasil}/cnpj`, { cnpj }, {
+        const response = await axios.post(`${urlApiBrasil}/dados/cnpj`, { cnpj }, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${tokenApiBrasil}`,
@@ -47,7 +47,7 @@ const buscarCnpj = async (id_user, token, cnpj) => {
         throw error;
     }
 };
-const buscarCnae = async (id_user, token, dados) => {
+const buscarCnae = async (id_user, token, cnae, quantidade, uf, municipio) => {
     try {
         // Verificar a validade do token
         const tokenValido = await Token.findOne({ where: { id_user, token } });
@@ -67,13 +67,61 @@ const buscarCnae = async (id_user, token, dados) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
 
-        const response = await axios.post(`${urlApiBrasil}/cnae`, {
-            cnae: dados.cnae,
-            quantidade: dados.quantidade,
-            uf: dados.uf,
-            municipio: dados.municipio,
+        const response = await axios.post(`${urlApiBrasil}/dados/lista-cnaes`, {
+            cnae: cnae,
+            quantidade: quantidade,
+            uf: uf,
+            municipio: municipio,
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${tokenApiBrasil}`,
+                DeviceToken: deviceToken,
+                Accept: "application/json",
+            },
+        });
+
+        // Registrar a consulta no log
+        await Logsconsultas.create({
+            id_user,
+            label_pesquisa: "Busca CNAE"
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Erro na busca CNAE:', error);
+        throw error;
+    }
+};
+const buscarCnaeDetalhes = async (id_user, token, cnae, quantidade, uf, municipio) => {
+    try {
+        // Verificar a validade do token
+        const tokenValido = await Token.findOne({ where: { id_user, token } });
+        if (!tokenValido) {
+            throw new Error('Token inválido ou expirado.');
+        }
+
+        // Verificar a quantidade de consultas disponíveis
+        const consultaCount = await ConsultaCount.findOne({ where: { id_user } });
+        if (!consultaCount || consultaCount.consultas <= 0) {
+            throw new Error('Falta de créditos para consulta Trust.');
+        }
+
+        // Reduzir a contagem de consultas em -1
+        await consultaCount.decrement('consultas');
+
+        // Realizar a consulta à API externa
+        const urlApiBrasil = process.env.URL_API_BRASIL;
+        const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+
+        const response = await axios.post(`${urlApiBrasil}/dados/cnae`, {
+            cnae: cnae,
+            quantidade: quantidade,
+            uf: uf,
+            municipio: municipio,
         }, {
             headers: {
                 "Content-Type": "application/json",
@@ -222,7 +270,7 @@ const buscarListaSocios = async (id_user, token, dados) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
 
         const response = await axios.post(`${urlApiBrasil}/lista-socios`, {
             quantidade: dados.quantidade,
@@ -251,6 +299,7 @@ const buscarListaSocios = async (id_user, token, dados) => {
 module.exports = {
     buscarCnpj,
     buscarCnae,
+    buscarCnaeDetalhes,
     buscarUf,
     buscarDataAbertura,
     buscarCapitalSocial,
