@@ -63,7 +63,7 @@ const buscarVeiculoDados = async (id_user, token, placa) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL + "/vehicles/dados";
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_GERAL_PROD;
+        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_GERAL_HOMOLOG;
 
         const response = await axios.post(urlApiBrasil, { placa }, {
             headers: {

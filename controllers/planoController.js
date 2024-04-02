@@ -6,7 +6,7 @@ const ItemPlano = require("../models/tb_plano_item");
 
 const criarPlano = async (req, res) => {
   try {
-    const { titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, qtd_pesquisas, tag, ofertas } = req.body;
+    const { titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, qtd_pesquisas, tag,   } = req.body;
     const plano = await Plano.create({ titulo_plano, subtitulo_plano, valor_plano_consulta, valor_plano_mes, dias_free, qtd_pesquisas, tag });
 
    

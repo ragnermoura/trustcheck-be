@@ -196,7 +196,7 @@ const buscarDataAbertura = async (id_user, token, dados) => {
         throw error;
     }
 };
-const buscarCapitalSocial = async (id_user, token, dados) => {
+const buscarCapitalSocial = async (inicial, final, id_user, token, cnae, quantidade, uf, municipio) => {
     try {
         // Verificar a validade do token
         const tokenValido = await Token.findOne({ where: { id_user, token } });
@@ -213,20 +213,25 @@ const buscarCapitalSocial = async (id_user, token, dados) => {
         // Reduzir a contagem de consultas em -1
         await consultaCount.decrement('consultas');
 
+        console.log('Aqui estão os dados recebidos API ====> ', inicial, final, id_user, token, cnae, quantidade, uf, municipio)
+
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
-        const response = await axios.post(`${urlApiBrasil}/capital-social`, {
-            capital_social_inicio: dados.capital_social_inicio,
-            capital_social_fim: dados.capital_social_fim,
-            quantidade: dados.quantidade,
-            cnae: dados.cnae,
-            uf: dados.uf,
-            municipio: dados.municipio,
+        const response = await axios.post(`${urlApiBrasil}/dados/capital-social`, {
+
+            
+
+            capital_social_inicio: inicial,
+            capital_social_fim: final,
+            quantidade: quantidade,
+            cnae: cnae,
+            uf: uf,
+            municipio: municipio,
         }, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${process.env.TOKEN_API_BRASIL_PROFILE_1}`,
-                DeviceToken: DEVICETOKEN_API_CNPJ_PROD,
+                DeviceToken: process.env.DEVICETOKEN_API_CNPJ_HOMOLOG,
                 Accept: "application/json",
             },
         });
@@ -250,7 +255,7 @@ const buscarCep = async (id_user, token, dados) => {
     }, { headers: configHeaders() });
     return response.data;
 };
-const buscarListaSocios = async (id_user, token, dados) => {
+const buscarListaSocios = async (id_user, token, cnpj) => {
     try {
         // Verificar a validade do token
         const tokenValido = await Token.findOne({ where: { id_user, token } });
@@ -272,8 +277,8 @@ const buscarListaSocios = async (id_user, token, dados) => {
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
         const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
 
-        const response = await axios.post(`${urlApiBrasil}/lista-socios`, {
-            quantidade: dados.quantidade,
+        const response = await axios.post(`${urlApiBrasil}/dados/lista-socios`, {
+            cnpj: cnpj,
         }, {
             headers: {
                 "Content-Type": "application/json",

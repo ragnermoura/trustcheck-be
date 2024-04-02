@@ -69,8 +69,9 @@ router.post('/data-abertura', async (req, res) => {
 // Rota para buscar por capital social
 router.post('/capital-social', async (req, res) => {
     try {
-        const dados = req.body;
-        const resultado = await buscarCapitalSocial(dados);
+        const { inicial, final, id_user, token, cnae, quantidade, uf, municipio } = req.body;
+
+        const resultado = await buscarCapitalSocial(inicial, final, id_user, token, cnae, quantidade, uf, municipio);
         res.json(resultado);
     } catch (error) {
         res.status(500).send({ message: error.message });
@@ -91,8 +92,8 @@ router.post('/cep', async (req, res) => {
 // Rota para buscar lista de sócios
 router.post('/lista-socios', async (req, res) => {
     try {
-        const dados = req.body;
-        const resultado = await buscarListaSocios(dados);
+        const { id_user, token, cnpj } = req.body;
+        const resultado = await buscarListaSocios(id_user, token, cnpj);
         res.json(resultado);
     } catch (error) {
         res.status(500).send({ message: error.message });
