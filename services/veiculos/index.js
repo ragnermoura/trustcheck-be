@@ -69,7 +69,7 @@ const buscarVeiculoDados = async (id_user, token, placa) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL + "/vehicles/dados";
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_GERAL_PROD
+        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_GERAL_PROD;
 
         const response = await axios.post(urlApiBrasil, { placa }, {
             headers: {
@@ -117,7 +117,7 @@ const buscarVeiculoLeilao = async (id_user, token, placa) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL + "/vehicles/leilao";
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_2;
-        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_LEILAO_PROD
+        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_LEILAO_PROD;
 
         const response = await axios.post(urlApiBrasil, { placa, leilao: "SIM" }, {
             headers: {
@@ -165,7 +165,7 @@ const buscarVeiculoBinBaseEstadual = async (id_user, token, placa, uf) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL + "/vehicles/binBaseEstadual";
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_2;
-        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_BIN_BASE_PROD
+        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_BIN_BASE_PROD;
 
         const response = await axios.post(urlApiBrasil, { placa, uf }, {
             headers: {

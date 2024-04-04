@@ -24,7 +24,7 @@ const buscarCnpj = async (id_user, token, cnpj) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
 
         const response = await axios.post(`${urlApiBrasil}/dados/cnpj`, { cnpj }, {
             headers: {
@@ -67,7 +67,7 @@ const buscarCnae = async (id_user, token, cnae, quantidade, uf, municipio) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
 
         const response = await axios.post(`${urlApiBrasil}/dados/lista-cnaes`, {
             cnae: cnae,
@@ -115,7 +115,7 @@ const buscarCnaeDetalhes = async (id_user, token, cnae, quantidade, uf, municipi
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
 
         const response = await axios.post(`${urlApiBrasil}/dados/cnae`, {
             cnae: cnae,
@@ -275,7 +275,7 @@ const buscarListaSocios = async (id_user, token, cnpj) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL;
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_HOMOLOG;
+        const deviceToken = process.env.DEVICETOKEN_API_CNPJ_PROD;
 
         const response = await axios.post(`${urlApiBrasil}/dados/lista-socios`, {
             cnpj: cnpj,
