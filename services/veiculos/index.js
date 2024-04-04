@@ -2,6 +2,7 @@ const axios = require('axios');
 require('dotenv').config();
 const ConsultaCount = require('../../models/tb_consulta_count');
 const Logsconsultas = require('../../models/tb_logs_consultas');
+const LogsAtividade = require('../../models/tb_logs');
 const Token = require('../../models/tb_token');
 
 const buscarVeiculoFipe = async (id_user, token, placa) => {
@@ -22,7 +23,7 @@ const buscarVeiculoFipe = async (id_user, token, placa) => {
         // Realizar a consulta à API externa
         const urlApiBrasil = process.env.URL_API_BRASIL + "/vehicles/fipe";
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_1;
-        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_FIPE_PROD;
+        const deviceToken = process.env.DEVICETOKEN_API_VEICULO_FIPE_HOMOLOG;
 
         const response = await axios.post(urlApiBrasil, { placa: placa }, {
             headers: {
@@ -32,6 +33,11 @@ const buscarVeiculoFipe = async (id_user, token, placa) => {
                 Accept: "application/json",
             },
         });
+
+        await LogsAtividade.create({
+            atividade: '✅ Status: 202 - Resultado da busca FIPE com sucesso.',
+            id_user: id_user,
+          });
 
         await Logsconsultas.create({
             id_user,
@@ -73,6 +79,11 @@ const buscarVeiculoDados = async (id_user, token, placa) => {
                 Accept: "application/json",
             },
         });
+
+        await LogsAtividade.create({
+            atividade: '✅ Status: 202 - Resultado da Busca Geral Veicular com sucesso.',
+            id_user: id_user,
+          });
 
         // Registrar a consulta no log
         await Logsconsultas.create({
@@ -117,6 +128,11 @@ const buscarVeiculoLeilao = async (id_user, token, placa) => {
             },
         });
 
+        await LogsAtividade.create({
+            atividade: '✅ Status: 202 - Resultado da Busca de Veículo Leilão com sucesso.',
+            id_user: id_user,
+          });
+
         // Registrar a consulta no log
         await Logsconsultas.create({
             id_user,
@@ -151,7 +167,7 @@ const buscarVeiculoBinBaseEstadual = async (id_user, token, placa, uf) => {
         const tokenApiBrasil = process.env.TOKEN_API_BRASIL_PROFILE_2;
         const deviceToken = process.env.DEVICETOKEN_API_VEICULO_BIN_BASE_HOMOLOG;
 
-        const response = await axios.post(urlApiBrasil, { placa, uf, binBaseEstadual: "SIM" }, {
+        const response = await axios.post(urlApiBrasil, { placa, uf }, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${tokenApiBrasil}`,
@@ -159,6 +175,11 @@ const buscarVeiculoBinBaseEstadual = async (id_user, token, placa, uf) => {
                 Accept: "application/json",
             },
         });
+
+        await LogsAtividade.create({
+            atividade: '✅ Status: 202 - Resultado da Busca da Base Estadual feita com sucesso.',
+            id_user: id_user,
+          });
 
         // Registrar a consulta no log
         await Logsconsultas.create({

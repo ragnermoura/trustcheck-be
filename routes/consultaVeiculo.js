@@ -8,10 +8,10 @@ const {
 } = require('../services/veiculos/index');
 
 // Buscar informações FIPE de um veículo pela placa
-router.post('/veiculo/fipe', async (req, res) => {
+router.post('/veiculo/fipe', async (req, res) => { 
   try {
-    const placa = req.body.placa;
-    const resultado = await buscarVeiculoFipe(placa);
+    const {id_user, token, placa } = req.body;
+    const resultado = await buscarVeiculoFipe(id_user, token, placa );
     res.json(resultado);
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -20,7 +20,7 @@ router.post('/veiculo/fipe', async (req, res) => {
 
 // Buscar dados gerais de um veículo pela placa
 router.post('/veiculo/dados', async (req, res) => {
-  const { id_user, token, placa } = req.body;
+  const {id_user, token, placa } = req.body;
   try {
     const resultado = await buscarVeiculoDados(id_user, token, placa);
     res.json(resultado);

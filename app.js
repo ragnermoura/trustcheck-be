@@ -31,11 +31,13 @@ const rotaPagamentoPix = require('./routes/pix');
 const rotaFinanceiro = require('./routes/pagamento');
 const rotaTicket = require('./routes/ticket');
 const rotaTermos = require('./routes/termos');
+const rotaDenuncia = require('./routes/denuncia');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors())
+
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
@@ -71,6 +73,7 @@ app.use('/pagamento', rotaPagamentoPix);
 app.use('/financeiro', rotaFinanceiro);
 app.use('/ticket', rotaTicket);
 app.use('/termos', rotaTermos);
+app.use('/denuncia', rotaDenuncia);
 
 
 app.get('/api/test', (req, res) => {
