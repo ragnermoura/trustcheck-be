@@ -7,6 +7,7 @@ const Log = require("../models/tb_logs");
 const Perfil = require("../models/tb_perfil");
 const Qrcode = require("../models/tb_qrcode");
 
+
 const autenticarUsuario = async (req, res, next) => {
   try {
     const { email, senha } = req.body;
