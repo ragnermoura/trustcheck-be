@@ -301,6 +301,7 @@ const buscarListaSocios = async (id_user, token, cnpj) => {
     }
 };
 
+
 module.exports = {
     buscarCnpj,
     buscarCnae,
