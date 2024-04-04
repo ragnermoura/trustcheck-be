@@ -12,15 +12,23 @@ const Denuncia = conn.define(
       allowNull: false,
       primaryKey: true,
     },
-    uf: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     placa: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    local: {
+    uf: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    marca: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    renavam: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    regiao: {
       type: DataTypes.STRING,
       allowNull: false,
     },

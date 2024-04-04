@@ -231,7 +231,7 @@ const buscarCapitalSocial = async (inicial, final, id_user, token, cnae, quantid
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${process.env.TOKEN_API_BRASIL_PROFILE_1}`,
-                DeviceToken: process.env.DEVICETOKEN_API_CNPJ_HOMOLOG,
+                DeviceToken: process.env.DEVICETOKEN_API_CNPJ_PROD,
                 Accept: "application/json",
             },
         });
