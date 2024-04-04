@@ -62,7 +62,7 @@ const autenticarUsuario = async (req, res, next) => {
       });
 
       const logAtividade = await Log.create({
-        atividade: '✅ Status: 200 - Usuário logado com sucesso',
+        atividade: ' Status: 200 - Usuário logado com sucesso',
         id_user:  user.id_user,
       });
 
@@ -76,7 +76,7 @@ const autenticarUsuario = async (req, res, next) => {
     } else {
       if(res.status == 401){
         const logAtividade = await Log.create({
-          atividade: '❌ Status: 401 - Falha na autenticação.',
+          atividade: ' Status: 401 - Falha na autenticação.',
           id_user:  user.id_user,
         });
       }
@@ -86,7 +86,7 @@ const autenticarUsuario = async (req, res, next) => {
 
     if(res.status == 500){
       const logAtividade = await Log.create({
-        atividade: `❌ Status: 500 - erro ======> ${error.message}`,
+        atividade: ` Status: 500 - erro ======> ${error.message}`,
         id_user:  user.id_user,
       });
     }
@@ -106,7 +106,7 @@ const logoutUsuario = async (req, res) => {
     );
 
     const logAtividade = await Log.create({
-      atividade: '✅ Status: 200 - Usuário deslogado com sucesso',
+      atividade: ' Status: 200 - Usuário deslogado com sucesso',
       id_user:  user.id_user,
     });
 

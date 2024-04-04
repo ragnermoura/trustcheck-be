@@ -185,7 +185,7 @@ const cadastrarUsuario = async (req, res, next) => {
       id_user: novoUsuario.id_user,
     });
     const logAtividade = await Log.create({
-      atividade: '✅ Status: 202 - Usuário cadastrado com sucesso',
+      atividade: ' Status: 202 - Usuário cadastrado com sucesso',
       id_user: novoUsuario.id_user,
     });
     const novoQrcode = await Qrcode.create({

@@ -35,7 +35,7 @@ const buscarVeiculoFipe = async (id_user, token, placa) => {
         });
 
         await LogsAtividade.create({
-            atividade: '✅ Status: 202 - Resultado da busca FIPE com sucesso.',
+            atividade: ' Status: 202 - Resultado da busca FIPE com sucesso.',
             id_user: id_user,
           });
 
@@ -81,7 +81,7 @@ const buscarVeiculoDados = async (id_user, token, placa) => {
         });
 
         await LogsAtividade.create({
-            atividade: '✅ Status: 202 - Resultado da Busca Geral Veicular com sucesso.',
+            atividade: ' Status: 202 - Resultado da Busca Geral Veicular com sucesso.',
             id_user: id_user,
           });
 
@@ -129,7 +129,7 @@ const buscarVeiculoLeilao = async (id_user, token, placa) => {
         });
 
         await LogsAtividade.create({
-            atividade: '✅ Status: 202 - Resultado da Busca de Veículo Leilão com sucesso.',
+            atividade: ' Status: 202 - Resultado da Busca de Veículo Leilão com sucesso.',
             id_user: id_user,
           });
 
@@ -177,7 +177,7 @@ const buscarVeiculoBinBaseEstadual = async (id_user, token, placa, uf) => {
         });
 
         await LogsAtividade.create({
-            atividade: '✅ Status: 202 - Resultado da Busca da Base Estadual feita com sucesso.',
+            atividade: ' Status: 202 - Resultado da Busca da Base Estadual feita com sucesso.',
             id_user: id_user,
           });
 
