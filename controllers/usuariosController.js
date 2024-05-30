@@ -12,6 +12,7 @@ const ConsultaCount = require("../models/tb_consulta_count");
 const Log = require("../models/tb_logs");
 const SendDoc = require("../models/tb_documentos");
 const Qrcode = require("../models/tb_qrcode");
+const Logsconsultas = require("../models/tb_logs_consultas");
 
 require('dotenv').config();
 
@@ -126,6 +127,10 @@ const excluirUsuario = async (req, res, next) => {
     });
 
     await Log.destroy({
+      where: { id_user: userId }
+    });
+
+    await Logsconsultas.destroy({
       where: { id_user: userId }
     });
 
