@@ -13,6 +13,11 @@ const Log = require("../models/tb_logs");
 const SendDoc = require("../models/tb_documentos");
 const Qrcode = require("../models/tb_qrcode");
 const Logsconsultas = require("../models/tb_logs_consultas");
+const Ticket = require("../models/tb_ticket");
+const Pesquisa = require("../models/tb_pesquisa");
+const Pagamento = require("../models/tb_pagamento");
+const Documento = require("../models/tb_documentos");
+const Acessos = require("../models/tb_acesso");
 
 require('dotenv').config();
 
@@ -134,7 +139,31 @@ const excluirUsuario = async (req, res, next) => {
       where: { id_user: userId }
     });
 
+    await Token.destroy({
+      where: { id_user: userId }
+    });
+
+    await Ticket.destroy({
+      where: { id_user: userId }
+    });
+
+    await Pesquisa.destroy({
+      where: { id_user: userId }
+    });
+
+    await Pagamento.destroy({
+      where: { id_user: userId }
+    });
+
     await Qrcode.destroy({
+      where: { id_user: userId }
+    });
+
+    await Documento.destroy({
+      where: { id_user: userId }
+    });
+
+    await Acessos.destroy({
       where: { id_user: userId }
     });
 
