@@ -114,9 +114,31 @@ const atualizarStatusUsuario = async (req, res, next) => {
 };
 const excluirUsuario = async (req, res, next) => {
   try {
-    const deletado = await User.destroy({
-      where: { id_user: req.params.id_user }
+    const userId = req.params.id_user;
+
+    // Excluindo registros dependentes primeiro
+    await ConsultaCount.destroy({
+      where: { id_user: userId }
     });
+
+    await Perfil.destroy({
+      where: { id_user: userId }
+    });
+
+    await Log.destroy({
+      where: { id_user: userId }
+    });
+
+    await Qrcode.destroy({
+      where: { id_user: userId }
+    });
+
+
+    // Excluindo o usuário
+    const deletado = await User.destroy({
+      where: { id_user: userId }
+    });
+
     if (deletado) {
       return res.status(200).send({ message: 'Usuário excluido com sucesso!' });
     } else {
@@ -126,6 +148,7 @@ const excluirUsuario = async (req, res, next) => {
     return res.status(500).send({ error: error.message });
   }
 };
+
 const cadastrarUsuario = async (req, res, next) => {
   try {
     const usuarioExistente = await User.findOne({
