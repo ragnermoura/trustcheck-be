@@ -12,6 +12,7 @@ router.patch("/status", userController.atualizarStatusUsuario);
 
 router.delete("/delete/:id_user", userController.excluirUsuario);
 router.post("/cadastro", uploadFields, userController.cadastrarUsuario);
+router.post("/cadastro/simples", uploadFields, userController.cadastrarUsuarioSimples);
 router.post("/documentos/:id_user", uploadFields, userController.cadastrarUsuario);
 
 
