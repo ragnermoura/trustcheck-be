@@ -321,9 +321,7 @@ const cadastrarUsuarioSimples = async (req, res, next) => {
 
 
     
-    const hashedPassword = await bcrypt.hash(req.body.senha, 10);
-    const htmlFilePath = path.join(__dirname, '../template/welcome/index.html');
-    let htmlContent = await fs.readFile(htmlFilePath, "utf8");
+    const hashedPassword = await bcrypt.hash(req.body.senha, 10); 
     const filename = req.file ? req.file.filename : "default-avatar.png";
     const qrData = `Nome: ${req.body.nome}, Sobrenome: ${req.body.sobrenome}, Email: ${req.body.email},  Avatar: ${filename}`;
     const qrCodeURL = await QRCode.toDataURL(qrData);
@@ -352,36 +350,6 @@ const cadastrarUsuarioSimples = async (req, res, next) => {
       id_user: novoUsuario.id_user
      ,
     });
-
-    htmlContent = htmlContent
-      .replace("{{nome}}", novoUsuario.nome)
-      .replace("{{emailclient}}", novoUsuario.email)
-      .replace("{{id}}", novoUsuario.id_user)
-      
-
-    let transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-      tls: {
-        ciphers: "TLSv1",
-      },
-    });
-
-
-    let mailOptions = {
-      from: `"Atendimento Trust" ${process.env.EMAIL_FROM}`,
-      to: novoUsuario.email,
-      subject: "✅ Conta criada com sucesso!",
-      html: htmlContent,
-    };
-
-    let info = await transporter.sendMail(mailOptions);
-    console.log("Mensagem enviada: %s", info.messageId);
 
     const response = {
       mensagem: "Usuário cadastrado com sucesso e Token unico gerado!",
